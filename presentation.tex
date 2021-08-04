@@ -1,0 +1,50 @@
+\documentclass[11pt, aspectratio=169]{beamer}
+\usepackage[french,noconfigs]{babel}
+\usepackage{presentation/beamerx}
+  \setbeamercovered{invisible}
+\usepackage{presentation/jonas}
+
+\graphicspath{
+    {img/code/}              % Figures produced by me, with cod from the repo.
+    {img/extern/}            % Figures that I did not create myself
+    {img/extern/beamerx/}   % Necessary for the theme.
+}
+% \newcommand*\InputBiasTable[1]{\input{img/bias_tables/#1}}
+\newcommand*\InputBiasTable[1]{\input{img/code/#1}}
+
+\title[EPS-HEP2021]{
+    A combined fit to the Higgs Branching Ratios at ILD
+}[Combined Higgs fit]
+\author[Jonas Kunath]{Jonas Kunath (LLR), on behalf of the ILD concept group}
+\date{29.07.2021}
+
+\begin{document}
+\maketitle
+\xsection{myblue}{Intro\-duction}
+    \input{presentation/ilc.tex}
+    \input{presentation/ild.tex}
+    \input{presentation/higgsstrahlung.tex}
+\xsection{myblue}{Event selection}
+    \input{presentation/selection.tex}
+\xsection{myblue}{Idea}
+    \input{presentation/idea_Higgs_all_in_one.tex}
+\xsection{myblue}{Implemen\-tation}
+    \input{presentation/implementation.tex}
+\xsection{myblue}{Fit}
+    \input{presentation/fit_setup.tex}
+    \input{presentation/fit_results.tex}
+    \input{presentation/fit_check_toys.tex}
+    \input{presentation/fit_change_bb_ww.tex}
+    \input{presentation/fit_dependency.tex}
+\xsection{myblue}{Conclusion}
+    \input{presentation/conclusion.tex}
+
+\newcounter{finalframe}\setcounter{finalframe}{\value{framenumber}}
+\xsection{myblue}{Back-up}[pr_ilc_cavity_resized]
+    \input{presentation/backup/expected_counts_e2e2.tex}
+    \input{presentation/backup/correlations.tex}
+    \input{presentation/backup/comparison_to_global_fit.tex}
+    \input{presentation/backup/higgstrahlung_per_z_decay.tex}
+    \input{presentation/higgsstrahlung_event_display.tex}
+\setcounter{framenumber}{\value{finalframe}}
+\end{document}

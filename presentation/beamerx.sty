@@ -1,0 +1,873 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{presentation/beamerx}[2017/01/31 v2.3.0, standard scientific slideshows layout for Ecole polytechnique (Palaiseau,France).]
+% The original version is hosted at https://github.com/BinetReseau/polytechnique-beamer/blob/master/source/beamerx.sty.
+
+
+%=======================================================================
+% Popular redefinitions/steering options:
+
+% \renewcommand{\titlegraphic}{} % Default, sets the title bkg to white.
+% \renewcommand{\titlegraphic}{  % Choose beamerxbackground.jpg as title bkg.
+%   \includegraphics[height=1.01\paperheight,keepaspectratio]{beamerxbackground}}
+%
+%=======================================================================
+
+%=======================================================================
+% Declaration des options
+%=======================================================================
+\DeclareOption{simplefoot}{%
+  \AtEndOfPackage{%
+    \renewcommand{\beamerxshorttitle}{}%
+  }
+}
+\DeclareOption{simplehead}{%
+  \AtEndOfPackage{%
+    \renewcommand{\includebeamerxarmes}{}%
+  }
+}
+\DeclareOption{notochead}{%
+  \AtEndOfPackage{%
+    \renewcommand{\includebeamerxsection}{}%
+  }
+}
+\DeclareOption{simplebloc}{%
+  \AtEndOfPackage{%
+    \renewcommand{\beamerxblockheader}{}
+  }
+}
+\DeclareOption{oldscreen}{%
+  \AtEndOfPackage{%
+    \oldscreen{}\applyscreen{}%
+  }
+}
+\ProcessOptions*
+%=======================================================================
+% Package requis
+%=======================================================================
+\RequirePackage{calc}
+\RequirePackage{ifthen} % pour utiliser des booleens
+\RequirePackage{graphicx}
+\RequirePackage{geometry}
+\RequirePackage{xcolor}
+\RequirePackage{xargs}
+\RequirePackage{adjustbox}
+\RequirePackage{pgf}
+\RequirePackage{ifluatex,ifxetex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\else % xelatex or lualatex
+  \RequirePackage{fontspec}
+  \AtBeginDocument{
+    \setsansfont{Muli}[
+      Extension=.ttf,
+      UprightFont=*-Regular,
+      ItalicFont=*-Italic,
+      BoldFont=*-Bold,
+      BoldItalicFont=*-BoldItalic
+    ]
+    \setromanfont{DroidSerif}[
+      Extension=.ttf,
+      UprightFont=*,
+      ItalicFont=*-Italic,
+      BoldFont=*-Bold,
+      BoldItalicFont=*-BoldItalic
+    ]
+    \setmonofont{RobotoMono}[
+      Extension=.ttf,
+      UprightFont=*-Regular,
+      ItalicFont=*-Italic,
+      BoldFont=*-Bold,
+      BoldItalicFont=*-BoldItalic
+    ]
+  }
+\fi
+%=======================================================================
+% Definition des longueurs
+%=======================================================================
+\newcounter{bmrX}\newcounter{bmrY}
+\newcounter{tlogY}
+
+\newcounter{bmrW}\newcounter{bmrH}
+\setcounter{bmrW}{320}
+
+\newcounter{bmrXmargin}
+\setcounter{bmrXmargin}{12}
+\newlength\beamerxmargin%
+\setlength\beamerxmargin{\thebmrXmargin\paperwidth/\thebmrW} % 6 units
+
+\newcounter{bmrTPmargin}
+\setcounter{bmrTPmargin}{6}
+
+\newcommand\oldscreen{% 4:3 ratio
+  \setcounter{bmrH}{240}
+}
+\newcommand\newscreen{% 16:9 ratio
+  \setcounter{bmrH}{180}
+}
+\newcommand\applyscreen{%
+}
+\newscreen{}\applyscreen{}
+%=======================================================================
+% Definition des couleurs
+%=======================================================================
+\definecolor{bleu303}{RGB}{0,62,92}
+\definecolor{bleu315}{RGB}{0,104,128}
+\definecolor{bleu3262}{RGB}{109,204,187}
+\definecolor{bleu5503}{RGB}{152,184,180}
+\definecolor{bleu317}{RGB}{212,232,239}
+\definecolor{gris11}{RGB}{66,66,66}
+\definecolor{gris10}{RGB}{99,99,99}
+\definecolor{gris8}{RGB}{155,155,155}
+\definecolor{gris428}{RGB}{197,197,197}
+\definecolor{rouge7427}{RGB}{169,32,33}
+\definecolor{rouge485}{RGB}{213,43,30}
+\definecolor{orange179}{RGB}{201,68,62}
+\definecolor{violet2622}{RGB}{77,22,84}
+\definecolor{violet5145}{RGB}{135,120,139}
+\definecolor{marron871}{RGB}{166,139,78}
+\definecolor{jaune110}{RGB}{210,175,36}
+\definecolor{jaune123}{RGB}{242,204,56}
+\definecolor{vert575}{RGB}{107,126,82}
+\definecolor{vert383}{RGB}{172,179,38}
+\definecolor{gris7}{RGB}{142,133,129}
+\definecolor{gris1}{RGB}{236,232,220}
+
+\definecolor{bleu303}{RGB}{0,58,86}
+\definecolor{bleu315}{RGB}{0,106,140}
+\definecolor{bleu3262}{RGB}{40,182,255}
+\definecolor{bleu5503}{RGB}{173,204,210}
+\definecolor{bleu317}{RGB}{218,238,239}
+\definecolor{gris11}{RGB}{115,114,114}
+\definecolor{gris10}{RGB}{134,133,134}
+\definecolor{gris8}{RGB}{171,171,172}
+\definecolor{gris428}{RGB}{218,220,222}
+\definecolor{rouge7427}{RGB}{179,4,48}
+\definecolor{rouge485}{RGB}{228,32,14}
+\definecolor{orange179}{RGB}{233,79,9}
+\definecolor{violet2622}{RGB}{89,15,85}
+\definecolor{violet5145}{RGB}{189,154,183}
+\definecolor{marron871}{RGB}{174,154,99}
+\definecolor{jaune110}{RGB}{244,207,0}
+\definecolor{jaune123}{RGB}{253,197,0}
+\definecolor{vert575}{RGB}{88,116,12}
+\definecolor{vert383}{RGB}{190,189,0}
+\definecolor{gris7}{RGB}{180,171,161}
+\definecolor{gris1}{RGB}{244,240,237}
+
+\colorlet{bleu303light}{white!20!bleu303}
+\colorlet{bleu315light}{white!20!bleu315}
+\colorlet{bleu317light}{white!20!bleu317}
+\colorlet{bleu3262light}{white!20!bleu3262}
+\colorlet{bleu5503light}{white!20!bleu5503}
+\colorlet{gris1light}{white!20!gris1}
+\colorlet{gris10light}{white!20!gris10}
+\colorlet{gris11light}{white!20!gris11}
+\colorlet{gris428light}{white!20!gris428}
+\colorlet{gris7light}{white!20!gris7}
+\colorlet{gris8light}{white!20!gris8}
+\colorlet{jaune110light}{white!20!jaune110}
+\colorlet{jaune123light}{white!20!jaune123}
+\colorlet{marron871light}{white!20!marron871}
+\colorlet{orange179light}{white!20!orange179}
+\colorlet{rouge485light}{white!20!rouge485}
+\colorlet{rouge7427light}{white!20!rouge7427}
+\colorlet{vert383light}{white!20!vert383}
+\colorlet{vert575light}{white!20!vert575}
+\colorlet{violet2622light}{white!20!violet2622}
+\colorlet{violet5145light}{white!20!violet5145}
+
+\colorlet{bleu303ultralight}{white!80!bleu303}
+\colorlet{bleu315ultralight}{white!80!bleu315}
+\colorlet{bleu317ultralight}{white!80!bleu317}
+\colorlet{bleu3262ultralight}{white!80!bleu3262}
+\colorlet{bleu5503ultralight}{white!80!bleu5503}
+\colorlet{gris1ultralight}{white!80!gris1}
+\colorlet{gris10ultralight}{white!80!gris10}
+\colorlet{gris11ultralight}{white!80!gris11}
+\colorlet{gris428ultralight}{white!80!gris428}
+\colorlet{gris7ultralight}{white!80!gris7}
+\colorlet{gris8ultralight}{white!80!gris8}
+\colorlet{jaune110ultralight}{white!80!jaune110}
+\colorlet{jaune123ultralight}{white!80!jaune123}
+\colorlet{marron871ultralight}{white!80!marron871}
+\colorlet{orange179ultralight}{white!80!orange179}
+\colorlet{rouge485ultralight}{white!80!rouge485}
+\colorlet{rouge7427ultralight}{white!80!rouge7427}
+\colorlet{vert383ultralight}{white!80!vert383}
+\colorlet{vert575ultralight}{white!80!vert575}
+\colorlet{violet2622ultralight}{white!80!violet2622}
+\colorlet{violet5145ultralight}{white!80!violet5145}
+
+\colorlet{bleu303dark}{black!20!bleu303}
+\colorlet{bleu315dark}{black!20!bleu315}
+\colorlet{bleu317dark}{black!20!bleu317}
+\colorlet{bleu3262dark}{black!20!bleu3262}
+\colorlet{bleu5503dark}{black!20!bleu5503}
+\colorlet{gris1dark}{black!20!gris1}
+\colorlet{gris10dark}{black!20!gris10}
+\colorlet{gris11dark}{black!20!gris11}
+\colorlet{gris428dark}{black!20!gris428}
+\colorlet{gris7dark}{black!20!gris7}
+\colorlet{gris8dark}{black!20!gris8}
+\colorlet{jaune110dark}{black!20!jaune110}
+\colorlet{jaune123dark}{black!20!jaune123}
+\colorlet{marron871dark}{black!20!marron871}
+\colorlet{orange179dark}{black!20!orange179}
+\colorlet{rouge485dark}{black!20!rouge485}
+\colorlet{rouge7427dark}{black!20!rouge7427}
+\colorlet{vert383dark}{black!20!vert383}
+\colorlet{vert575dark}{black!20!vert575}
+\colorlet{violet2622dark}{black!20!violet2622}
+\colorlet{violet5145dark}{black!20!violet5145}
+
+\colorlet{bleu303ultradark}{black!80!bleu303}
+\colorlet{bleu315ultradark}{black!80!bleu315}
+\colorlet{bleu317ultradark}{black!80!bleu317}
+\colorlet{bleu3262ultradark}{black!80!bleu3262}
+\colorlet{bleu5503ultradark}{black!80!bleu5503}
+\colorlet{gris1ultradark}{black!80!gris1}
+\colorlet{gris10ultradark}{black!80!gris10}
+\colorlet{gris11ultradark}{black!80!gris11}
+\colorlet{gris428ultradark}{black!80!gris428}
+\colorlet{gris7ultradark}{black!80!gris7}
+\colorlet{gris8ultradark}{black!80!gris8}
+\colorlet{jaune110ultradark}{black!80!jaune110}
+\colorlet{jaune123ultradark}{black!80!jaune123}
+\colorlet{marron871ultradark}{black!80!marron871}
+\colorlet{orange179ultradark}{black!80!orange179}
+\colorlet{rouge485ultradark}{black!80!rouge485}
+\colorlet{rouge7427ultradark}{black!80!rouge7427}
+\colorlet{vert383ultradark}{black!80!vert383}
+\colorlet{vert575ultradark}{black!80!vert575}
+\colorlet{violet2622ultradark}{black!80!violet2622}
+\colorlet{violet5145ultradark}{black!80!violet5145}
+
+\definecolor{themeviolet-bg}{RGB}{153,140,157}
+\definecolor{themeviolet-altbg}{RGB}{106,90,110}
+\colorlet{themeviolet-fg}{bleu303}
+
+\definecolor{themegrey-bg}{RGB}{160,142,147}
+\definecolor{themegrey-altbg}{RGB}{122,113,108}
+\colorlet{themegrey-fg}{jaune123}
+
+\definecolor{themered-bg}{RGB}{213,90,79}
+\definecolor{themered-altbg}{RGB}{135,70,55}
+\definecolor{themered-fg}{RGB}{0,80,111}
+
+\definecolor{themeblue-bg}{RGB}{0,123,147}
+\definecolor{themeblue-altbg}{RGB}{0,80,102}
+\definecolor{themeblue-fg}{RGB}{245,211,71}
+
+\definecolor{themepurple-bg}{RGB}{97,37,103}
+\definecolor{themepurple-altbg}{RGB}{42,23,40}
+\definecolor{themepurple-fg}{RGB}{245,211,71}
+
+\definecolor{themegreen-bg}{RGB}{126,143,100}
+\definecolor{themegreen-altbg}{RGB}{75,97,65}
+\definecolor{themegreen-fg}{RGB}{242,204,56}
+
+\definecolor{themeyellow-bg}{RGB}{219,187,46}
+\definecolor{themeyellow-altbg}{RGB}{151,125,0}
+\colorlet{themeyellow-fg}{bleu303}
+
+\definecolor{themeturquoise-bg}{RGB}{125,212,199}
+\definecolor{themeturquoise-altbg}{RGB}{82,170,154}
+\colorlet{themeturquoise-fg}{bleu303}
+
+\definecolor{llblue}{RGB}{0,56,148}
+\colorlet{thememyblue-bg}{llblue}
+\colorlet{thememyblue-altbg}{llblue}
+\definecolor{thememyblue-fg}{RGB}{245,211,71}
+
+%\definecolor{theme-bg}{RGB}{}
+%\definecolor{theme-altbg}{RGB}{}
+%\definecolor{theme-fg}{RGB}{}
+
+%=======================================================================
+% Definition du theme beamer
+%=======================================================================
+%---------- Parametres generaux
+\newcommand\defaultheadcolor{%
+  \colorlet{xhdcolor}{bleu303}%
+}
+\defaultheadcolor%
+\newcommand\resetcolors{%
+  \colorlet{xfgcolor}{black}%
+  \colorlet{xbgcolor}{white}%
+  \colorlet{xtextcolor}{black}%
+  \colorlet{xemphcolor}{bleu303}%
+  \colorlet{xalrtcolor}{rouge485}%
+  \colorlet{xfootcolor}{xtextcolor}%
+  \colorlet{xheadcolor}{xemphcolor}%
+}
+\resetcolors%
+
+\setbeamercovered{transparent=40}
+\setlength\fboxsep{1ex}
+
+\usefonttheme{professionalfonts}
+\usefonttheme[stillsansseriflarge,stillsansserifsmall]{serif}
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamersize{text margin left=\beamerxmargin}
+\setbeamersize{text margin right=\beamerxmargin}
+
+\newcommand{\beamerxshorttitle}{-- \insertshorttitle}
+\newcommand{\beamerxcompany}{}
+\newcommand{\company}[1]{%
+  \renewcommand{\beamerxcompany}{-- \textbf{#1} }%
+}
+\newcommand{\beamerxfootleft}{\textbf{\polyauteursave} \beamerxcompany}
+\newcommand\resetfootline{%
+  \setbeamertemplate{footline}{%
+    \color{xfootcolor}%
+    \hspace*{\beamerxmargin}%
+    \raisebox{\beamerxmargin}{%
+      \beamerxfootleft%
+      \beamerxshorttitle%
+    }%
+    \hspace*{\fill}
+    \raisebox{\beamerxmargin}{%
+      \insertframenumber%
+    }%
+    \hspace*{\beamerxmargin}%
+  }
+}
+
+\newcommand\resetframetitle{%
+  \setbeamertemplate{frametitle}{%
+    \raisebox{-\beamerxmargin}{\sffamily\Large\color{xheadcolor}\MakeUppercase{\insertframetitle}}
+  }
+}
+
+\newcommand\includebeamerxarmes{\color{gris428}\includegraphics[height=\paperheight/6,keepaspectratio]{beamerxarmes}}
+\newcommand\insertsectionHEAD{\expandafter\insertsectionHEADaux\insertsectionhead}
+\newcommand\insertsectionHEADaux[3]{#1{#2}{\MakeUppercase{#3}}}
+\newcommand\includebeamerxsection{%
+  \ifnum \thesection>0
+    {%
+      \renewcommand\baselinestretch{.5}\color{xhdcolor}\rule{.8\textwidth}{.5ex}\\[-2ex]
+      \raisebox{-\height}{%
+        \begin{minipage}{\textwidth}\tiny\flushright%
+          \hspace*{0mm}\insertsectionHEAD%
+        \end{minipage}%
+      }%
+    }\\[.2ex]%
+  \else%
+  \fi%
+}
+\newcommand\resetbackgroundcanvas{%
+  \setbeamertemplate{background canvas}{%
+    \setlength{\unitlength}{\paperwidth/\thebmrW}%
+    \begin{picture}(\thebmrW,\thebmrH)%
+      \setcounter{bmrX}{\thebmrW-\thebmrXmargin}\setcounter{bmrY}{\thebmrH-\thebmrXmargin}%
+      \put(\thebmrX,\thebmrY){%
+        \makebox(0,0)[rt]{%
+          \begin{minipage}{\paperheight/5}\flushright%
+            \includebeamerxsection{}
+            \includebeamerxarmes{}
+          \end{minipage}
+        }%
+      }%
+    \end{picture}%
+  }%
+}%
+
+\newcommand{\beamerxblockheader}{%
+    \color{marron871}\raisebox{-0.5ex}{\includegraphics[width=2em]{beamerxfiletcourt}}\\
+}
+\newcommand\resetblock{%
+  \setbeamertemplate{block begin}{%
+    \begin{minipage}{\textwidth}\flushleft%
+      \beamerxblockheader%
+      \color{rouge485}\rmfamily\bfseries\large%
+      \insertblocktitle{}
+
+      \color{xemphcolor}\sffamily\mdseries\normalsize%
+  }
+  \setbeamertemplate{block end}{%
+    \end{minipage}\vspace*{1mm}
+  }
+}
+
+\newcommand\beamerxresettemplates{%
+  \resetcolors%
+  \resetfootline%
+  \resetframetitle%
+  \resetbackgroundcanvas%
+  \resetblock%
+}
+\AtBeginDocument{\beamerxresettemplates{}}
+
+\setbeamercolor{alerted text}{fg=xalrtcolor}
+\setbeamercolor{item}{fg=xemphcolor}
+\setbeamercolor{normal text}{fg=xtextcolor}
+\setbeamertemplate{itemize items}{-}
+
+%=======================================================================
+% Commandes de mise en page utilisateur
+%=======================================================================
+%---------- Informations sur le document
+\def\polytitresave{}
+\def\polysoustitresave{}
+\def\polyauteursave{}
+\def\polyauteurlonguesave{}
+\def\polydatesave{\today}
+
+%---------- Mise en page
+\newcommand{\MakeUppercaseWithNewline}[1]{%
+  \begingroup
+  \let\SavedOrgNewline\\%
+  \DeclareRobustCommand{\\}{\SavedOrgNewline}%
+  \MakeUppercase{#1}%
+  \endgroup
+}
+
+\let\oldtitle=\title%
+\renewcommandx\title[3][1={},3={}]{%
+    % use: \title[sous-titre]{titre}[titre court]
+    \renewcommand\polytitresave{#2}
+    \renewcommand\polysoustitresave{#1}
+    \ifthenelse{\equal{#3}{}}{%
+      \oldtitle{#2}%
+    }{%
+      \oldtitle[#3]{#2}%
+    }
+    \subtitle{#1}
+}
+
+\let\oldauthor=\author%
+\renewcommandx\author[2][1={}]{%
+    % use: \author[auteur court]{auteur}
+    \renewcommand\polyauteurlonguesave{#2}
+    \ifthenelse{\equal{#1}{}}{%
+      \renewcommand\polyauteursave{#2}
+      \oldauthor{#2}
+    }{
+      \renewcommand\polyauteursave{#1}
+      \oldauthor[#1]{#2}
+    }
+}
+
+% \let\olddate=\date
+\renewcommand\date[1]{%
+    \renewcommand\polydatesave{#1}
+}
+
+%=======================================================================
+% Diapos conforme charte graphique
+%=======================================================================
+%--- Maketitle
+\def\includebeamerxlogo{}
+\newcommand{\nologo}[1]{%
+  \renewcommand{\includebeamerxlogo}{\color{white}\includegraphics[height=0.25\paperheight,keepaspectratio]{beamerxlogo}}
+}
+\newlength\logoheight
+\setlength\logoheight{.25\paperheight}
+\nologo{}
+\def\logo{}
+\renewcommand{\logo}[2][1]{%
+  \renewcommand{\includebeamerxlogo}{%
+    \begin{minipage}{.25\paperwidth}\flushleft%
+      \includegraphics[height=.25\paperheight,keepaspectratio]{beamerxlogo}\\[0.01250\paperwidth]
+      \setlength\logoheight{#1\logoheight}%
+      \includegraphics[height=\logoheight,keepaspectratio]{#2}
+      \setlength\logoheight{.25\paperheight}
+    \end{minipage}
+  }%
+}
+\def\titlegraphic{}%
+\def\titletextcolor{\color{xfgcolor}}%
+\def\includetoprowlogos{
+  \begin{minipage}[lt]{0.35\paperwidth}%
+    \hspace*{1em}%\hspace{\beamerxmargin}%
+    \includegraphics[height=0.22\paperheight]{beamerx/logo_xipp_blue_longue}%\hfill\vfill%
+  \end{minipage}
+  \hfill
+  \begin{minipage}[ct]{0.35\paperwidth}
+    \centering
+    \vspace{1em}
+    \includegraphics[height=0.22\paperheight]{beamerx/logo_llr}%\hfill\vfill%
+  \end{minipage}
+  \hfill
+  \begin{minipage}[rt]{0.3\paperwidth}
+    \hfill
+    \includegraphics[height=0.22\paperheight]{beamerx/logo_ILD_whiteonblue}
+    \hspace{\beamerxmargin}
+  \end{minipage}
+}
+\AtBeginDocument{%
+  \renewcommand\maketitle{%
+    \setlength{\unitlength}{\paperwidth/\thebmrW}%
+    \setbeamertemplate{background canvas}{%
+      \titletextcolor%
+      \begin{picture}(\thebmrW,\thebmrH)%
+        \setcounter{bmrX}{\thebmrW/2}%
+        \setcounter{bmrY}{\thebmrH/2}%
+        \put(\thebmrX,\thebmrY){%
+          \makebox(0,0)[c]{%
+            \titlegraphic%
+          }%
+        }%
+        % \setcounter{bmrX}{2*\thebmrTPmargin}%
+        % \put(\thebmrX,\thebmrY){%
+        %   \makebox(0,0)[l]{%
+        %     \includebeamerxlogo{}%
+        %   }%
+        % }%
+        \setcounter{bmrX}{\thebmrW/2}%
+        \setcounter{tlogY}{2*\thebmrY-\thebmrY/5 - \thebmrTPmargin}
+        \put(\thebmrX,\thetlogY){%
+          \makebox(0,0)[c]{%
+              \includetoprowlogos%
+          }%
+        }%
+        \put(\thebmrTPmargin,\thebmrTPmargin){%
+          \makebox(0,0)[lb]{%
+            \begin{minipage}{.5\paperwidth}\noindent%
+              \sffamily\footnotesize\polyauteurlonguesave\hspace*{0pt}%
+            \end{minipage}%
+          }%
+        }%
+        \setcounter{bmrX}{\thebmrW-\thebmrTPmargin}%
+        \put(\thebmrX,\thebmrTPmargin){%
+          \makebox(0,0)[rb]{%
+            \begin{minipage}{.5\paperwidth}\noindent\flushright%
+              \sffamily\footnotesize\polydatesave\hspace*{0pt}%
+            \end{minipage}%
+          }%
+        }%
+        \setcounter{bmrY}{\thebmrY-7}
+        \setcounter{bmrX}{\thebmrW/2}
+        \put(\thebmrX,\thebmrY){%
+            \makebox(0,0)[cb]{%
+            \begin{minipage}{0.75\paperwidth}\noindent\center%\flushright%
+              \Large\setlength{\baselineskip}{0.7\baselineskip}%
+              \sffamily\bfseries\MakeUppercaseWithNewline{\polytitresave}\hspace*{0pt}%
+            \end{minipage}%
+          }%
+        }%
+        \setcounter{bmrY}{\thebmrY+1}%
+        \put(\thebmrX,\thebmrY){%
+          \makebox(0,0)[ct]{%
+            \begin{minipage}{0.75\paperwidth}\noindent\center%\flushright%
+              \setlength{\baselineskip}{0.7\baselineskip}%
+              \sffamily\polysoustitresave\hspace*{0pt}%
+            \end{minipage}%
+          }%
+        }%
+      \end{picture}%
+    }
+    \begin{frame}[plain,c]
+    \end{frame}
+    \resetbackgroundcanvas{}
+  }
+}
+
+%--- XSection
+% Prototype :
+% \xsection{color_choice}
+%          [short_title]
+%          {title}
+%          [picture]
+\def\xsection{\@ifstar\@@xsection\@xsection}
+\newcommandx{\@xsection}[4][{2={},4=noframe}]{%
+  \ifthenelse{\equal{#2}{}}{%
+    \section{#3}%
+  }{%
+    \section[#2]{#3}%
+  }%
+  \ifthenelse{\equal{#4}{noframe}}{%
+    \colorlet{xhdcolor}{theme#1-bg}%
+    }{%
+    \xsectionframe{theme#1-bg}{theme#1-fg}{#4}{\arabic{section}}{#3}%
+    }
+}
+\newcommandx{\@@xsection}[4][{2={},4=noframe}]{%
+  \ifthenelse{\equal{#2}{}}{%
+    \section*{#3}%
+  }{%
+    \section*[#2]{#3}%
+  }%
+  \addtocounter{section}{-1}%
+  \ifthenelse{\equal{#4}{noframe}}{%
+    \colorlet{xhdcolor}{theme#1-bg}%
+    }{%
+    \xsectionframe{theme#1-bg}{theme#1-fg}{#4}{\arabic{section}}{#3}%
+    }
+}
+
+%- XSectionFrame
+% Prototype :
+% \xsectionframe{bg_color}
+%               {fg_color}
+%               {picture}
+%               {number}
+%               {title}
+\newcommand{\xsectionframe}[5]{%
+  \colorlet{xhdcolor}{#1}%
+  \setbeamertemplate{background canvas}{%
+    \setlength{\unitlength}{\paperwidth/\thebmrW}%
+    \begin{picture}(\thebmrW,\thebmrH)%
+      \setcounter{bmrX}{\thebmrW/2}%
+      \put(\thebmrX,0){%
+        \makebox(0,0)[cb]{%
+          \includegraphics[width=\paperwidth,keepaspectratio]{#3}%
+        }%
+      }%
+      \setcounter{bmrY}{2*\thebmrH/3}%
+      \put(0,\thebmrY){%
+        \color{#1}\rule{\paperwidth}{\paperheight/3}%
+      }%
+      \setcounter{bmrY}{5*\thebmrH/6}%
+      \ifthenelse{\equal{#4}{}}{%
+        \put(\thebmrX,\thebmrY){%
+          \makebox(0,0)[c]{%
+            \begin{minipage}{140\unitlength}\centering%
+              \Large\sffamily\color{#2}\MakeUppercaseWithNewline{#5}%
+            \end{minipage}%
+          }%
+        }%
+      }{%
+        \put(\thebmrX,\thebmrY){%
+          \makebox(0,0)[cb]{%
+            \begin{minipage}{140\unitlength}\centering%
+              \Huge\sffamily\color{#2}#4%
+            \end{minipage}%
+          }%
+        }%
+        \setcounter{bmrY}{\thebmrY-5}%
+        \put(\thebmrX,\thebmrY){%
+          \makebox(0,0)[ct]{%
+            \begin{minipage}{140\unitlength}\centering%
+              \Large\sffamily\color{#2}\MakeUppercaseWithNewline{#5}%
+            \end{minipage}%
+          }%
+        }%
+      }%
+    \end{picture}%
+  }
+  \begin{frame}[plain,c]
+  \end{frame}
+  \resetbackgroundcanvas{}
+}
+
+%--- XSubSection
+% Prototype :
+% \xsubsection{color_choice}
+%             [short_title]
+%             {title}
+%             {subtitle}
+%             [picture]
+\def\xsubsection{\@ifstar\@@xsubsection\@xsubsection}
+\newcommandx{\@xsubsection}[5][{2={},5=pei}]{%
+  \ifthenelse{\equal{#2}{}}{%
+    \subsection{#3}%
+  }{%
+    \subsection[#2]{#3}%
+  }%
+  \xsubsectionframe{theme#1-bg}{theme#1-altbg}{theme#1-fg}{#5}{#3}{#4}%
+}
+\newcommandx{\@@xsubsection}[5][{2={},5=pei}]{%
+  \ifthenelse{\equal{#2}{}}{%
+    \subsection*{#3}%
+  }{%
+    \subsection*[#2]{#3}%
+  }%
+  \addtocounter{subsection}{-1}%
+  \xsubsectionframe{theme#1-bg}{theme#1-altbg}{theme#1-fg}{#5}{#3}{#4}%
+}
+
+%- XSubSectionFrame
+% Prototype :
+% \xsubsectionframe{bg_color}
+%                  {bg_altcolor}
+%                  {fg_color}
+%                  {picture}
+%                  {title}
+%                  {subtitle}
+\newcommand{\xsubsectionframe}[6]{%
+  \setbeamertemplate{background canvas}{%
+    \setlength{\unitlength}{\paperwidth/\thebmrW}%
+    \begin{picture}(\thebmrW,\thebmrH)%
+      \setcounter{bmrX}{\thebmrW/2}%
+      \put(\thebmrX,\thebmrH){%
+        \makebox(0,0)[ct]{%
+          \includegraphics[width=\paperwidth,keepaspectratio]{#4}%
+        }%
+      }%
+      \put(0,0){%
+        \color{#1}\rule{\paperwidth}{.5\paperheight}%
+      }%
+      \setcounter{bmrY}{\thebmrH/4}%
+      \put(\thebmrW,\thebmrY){%
+        \makebox(0,0)[c]{%
+          \color{#2}\includegraphics[height=3\paperheight/7,keepaspectratio]{beamerxarmes}%
+        }%
+      }%
+      \ifthenelse{\equal{#6}{}}{%
+        \setcounter{bmrY}{\thebmrY-3}%
+        \put(\thebmrX,\thebmrY){%
+          \makebox(0,0)[ct]{%
+            \color{#3}\includegraphics[height=\paperheight/22,keepaspectratio]{beamerxx}%
+          }%
+        }%
+        \setcounter{bmrY}{\thebmrY+6}%
+        \put(\thebmrX,\thebmrY){%
+          \makebox(0,0)[cb]{%
+            \begin{minipage}{.75\paperwidth}\centering%
+              \large\rmfamily\bfseries\color{#3}\MakeUppercaseWithNewline{#5}%
+            \end{minipage}%
+          }%
+        }%
+      }{%
+        \put(\thebmrX,\thebmrY){%
+          \makebox(0,0)[c]{%
+            \color{#3}\includegraphics[height=\paperheight/22,keepaspectratio]{beamerxx}%
+          }%
+        }%
+        \setcounter{bmrY}{\thebmrY+11}%
+        \put(\thebmrX,\thebmrY){%
+          \makebox(0,0)[cb]{%
+            \begin{minipage}{.75\paperwidth}\centering%
+              \large\rmfamily\bfseries\color{#3}\MakeUppercaseWithNewline{#5}%
+            \end{minipage}%
+          }%
+        }%
+        \setcounter{bmrY}{\thebmrY-22}%
+        \put(\thebmrX,\thebmrY){%
+          \makebox(0,0)[ct]{%
+            \begin{minipage}{.75\paperwidth}\centering%
+              \large\rmfamily\color{#3}#6%
+            \end{minipage}%
+          }%
+        }%
+      }%
+    \end{picture}%
+  }
+  \begin{frame}[plain,c]
+  \end{frame}
+  \resetbackgroundcanvas{}
+}
+
+%--- XPic
+% Prototype:
+% \begin{xpic}
+%       [size adjustment]
+%       {picture}
+\newenvironment{xpic}[2][hw]{%
+  \setbeamertemplate{background canvas}{%
+    \setlength{\unitlength}{\paperwidth/\thebmrW}%
+    \begin{picture}(\thebmrW,\thebmrH)%
+      \setcounter{bmrX}{\thebmrW/2}\setcounter{bmrY}{\thebmrH/2}%
+      \put(\thebmrX,\thebmrY){%
+        \makebox(0,0)[c]{%
+          \ifthenelse{\equal{#1}{w}}{%
+            \includegraphics[width=\paperwidth]{#2}%
+          }{\ifthenelse{\equal{#1}{h}}{%
+            \includegraphics[height=\paperheight]{#2}%
+          }{%
+            \includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{#2}%
+          }}%
+        }%
+      }%
+    \end{picture}
+  }%
+  \begin{frame}[plain,b]\centering%
+}{%
+    \vspace*{5mm}
+  \end{frame}%
+}
+
+%--- Picframe
+% Prototype:
+% \begin{picframe}
+%       [dark/light]
+%       {picture}
+%       [frame parameters]
+%       {title}
+\newsavebox\beamerxpicturebox%
+\newlength\beamerxpictureboxH%
+\newlength\beamerxpictureboxW%
+\newcommand\includefullpic[1]{%
+  \sbox\beamerxpicturebox{\includegraphics[width=1cm]{#1}}%
+  \setlength\beamerxpictureboxH{\ht\beamerxpicturebox}%
+  \setlength\beamerxpictureboxW{\wd\beamerxpicturebox}%
+  \setlength\beamerxpictureboxW{\beamerxpictureboxW/\thebmrW}%
+  \setlength\beamerxpictureboxW{\thebmrH\beamerxpictureboxW}%
+  \ifdim\beamerxpictureboxH<\beamerxpictureboxW%
+    \includegraphics[height=\paperheight]{#1}%
+  \else%
+    \includegraphics[width=\paperwidth]{#1}%
+  \fi%
+}
+\newenvironmentx{picframe}[4][1=darkbw,3=c]{%
+  \ifthenelse{\equal{#1}{darkbw}}{%dark b&w
+    \colorlet{xfgcolor}{black}%
+    \colorlet{xtextcolor}{white}%
+    \colorlet{xbgcolor}{white}%
+    \colorlet{xemphcolor}{black}%
+    \colorlet{xalrtcolor}{rouge485dark}%
+  }{\ifthenelse{\equal{#1}{dark}}{%dark
+    \colorlet{xfgcolor}{black}%
+    \colorlet{xtextcolor}{white}%
+    \colorlet{xbgcolor}{white}%
+    \colorlet{xemphcolor}{bleu303dark}%
+    \colorlet{xalrtcolor}{rouge485dark}%
+  }{\ifthenelse{\equal{#1}{lightbw}}{%light b&w
+    \colorlet{xfgcolor}{white}%
+    \colorlet{xtextcolor}{black}%
+    \colorlet{xbgcolor}{black}%
+    \colorlet{xemphcolor}{white}%
+    \colorlet{xalrtcolor}{rouge485}%
+  }{%light
+    \colorlet{xfgcolor}{white}%
+    \colorlet{xtextcolor}{black}%
+    \colorlet{xbgcolor}{bleu303dark}%
+    \colorlet{xemphcolor}{white}%
+    \colorlet{xalrtcolor}{rouge485}%
+  }}}%
+  \colorlet{xfootcolor}{xtextcolor}%
+  \setbeamertemplate{background canvas}{%
+    \setlength{\unitlength}{\paperwidth/\thebmrW}%
+    \begin{picture}(\thebmrW,\thebmrH)%
+      \setcounter{bmrX}{\thebmrW/2}\setcounter{bmrY}{\thebmrH/2}%
+      \put(\thebmrX,\thebmrY){%
+        \makebox(0,0)[c]{%
+          \includefullpic{#2}%
+        }%
+      }%
+    \end{picture}%
+  }
+  \setbeamertemplate{frametitle}{%
+    \raisebox{-\beamerxmargin}{%
+      \hspace*{-\beamerxmargin}%
+      \colorbox{xbgcolor}{%
+        \hspace*{\dimexpr\beamerxmargin-\fboxsep}%
+        \sffamily\Large\color{xemphcolor}%
+        \MakeUppercase{\insertframetitle}%
+      }%
+    }%
+  }
+  \setbeamertemplate{block begin}{%
+    \pgfsetfillopacity{0.3}
+    \begin{adjustbox}{minipage={\textwidth-2\fboxsep},margin=\fboxsep,bgcolor=xbgcolor}\color{xemphcolor}\flushleft%
+      \pgfsetfillopacity{1}
+      \color{xalrtcolor}\rmfamily\bfseries\large%
+      \insertblocktitle{}
+
+      \color{xfgcolor}\sffamily\mdseries\normalsize%
+  }
+  \setbeamertemplate{block end}{%
+    \end{adjustbox}
+    \pgfsetfillopacity{1}
+  }
+  \begin{frame}[#3]{#4}
+}{%
+  \end{frame}
+  \resetbackgroundcanvas%
+  \resetcolors%
+  \resetframetitle%
+  \resetblock%
+}
+
+\endinput

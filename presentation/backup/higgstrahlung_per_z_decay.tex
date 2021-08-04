@@ -1,0 +1,47 @@
+\begin{frame}%[shrink]
+    \frametitle{Higgsstrahlung}
+    \begin{columns}[c,onlytextwidth]
+    \begin{column}{0.40\textwidth}
+    \resizebox{\textwidth}{!}{
+        \input{presentation/feynman_higgsstrahlung.tex}
+    }
+    \end{column}
+    \begin{column}{0.60\textwidth}
+    % Like locally setting the font size from 11 to 10.
+    \setbeamertemplate{itemize/enumerate body begin}{\footnotesize}
+    \setbeamertemplate{itemize/enumerate subbody begin}{\footnotesize}
+    \vspace{-1\baselineskip} % Still in font size 10, it is one line too long.
+    \begin{itemize}
+        \item \textcolor{xemphcolor}{
+            $Z \rightarrow \mu^+ \mu^-, Z \rightarrow e^+ e^-$}:
+
+            Golden channels due to recoil mass method,
+            $M_{\tn{recoil}}^2 = s + M_Z^2 - 2\sqrt{s} \cdot E_Z$.
+        \item \textcolor{xemphcolor}{
+            $Z \rightarrow \tau^+ \tau^-$}:
+
+            Event tagging on the $\tau$ is complicated.
+            \begin{itemize}
+                \item Large $\tau$ decay opening angle (low $E_\tau$).
+                \item Divers environment from the Higgs decay.
+            \end{itemize}
+        \item \textcolor{xemphcolor}{
+            $Z \rightarrow \nu\bar{\nu}$}:
+            \begin{itemize}
+                \item[--] Significant WW-fusion contribution in $\nu\bar{\nu}H$.
+                \item[--] Cannot tag event on $\nu$.
+                \item[+]  Only Higgs boson (and beam overlay) in event.
+                \item[+]  $6\times$ higher cross section.
+            \end{itemize}
+
+        \item \textcolor{xemphcolor}{
+            $Z \rightarrow q \bar{q}$}:
+            \begin{itemize}
+                \item[+]  Hightest cross section.
+                \item[--] Hard to identify the traces from the Z decay
+                    without making assumptions on the Higgs decay.
+            \end{itemize}
+    \end{itemize}
+    \end{column}
+    \end{columns}
+    \end{frame}
