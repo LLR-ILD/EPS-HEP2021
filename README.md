@@ -4,6 +4,18 @@ Build the presentation given online at the
 [EPS-HEP2021](https://indico.desy.de/event/28202/contributions/106023/)
 conference.
 
+## Fast access
+
+Several assets can be directly accessed without running the code:
+
+- [**Download**](https://github.com/LLR-ILD/EPS-HEP2021/releases/download/v1.0/presentation.pdf)
+  the pdf presentation given at EPS-HEP2021.
+- [**Access**](https://github.com/LLR-ILD/EPS-HEP2021/tree/gh-action-result/make-all/build)
+  the _current_ version of the documents from this repository.
+
+In all cases you might alternatively want to navugate to the parent of the link
+to view byproducts of the artifact creation, including the raw figures.
+
 ## Usage
 
 Should be as simple as

@@ -21,14 +21,23 @@ jobs:
     - run: python -m pip install --upgrade pip wheel
     - run: python -m pip install -r code/requirements.txt
 
+    - name: Setup pdflatex
+      run: sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-lang-french
     - name: Execute the Makefile
       run: |
         make all
-        make clean
 
     - name: Commit to orphan branch
       run: |
+        echo $(ls -lah)
+        echo $(ls -lah build)
+        git add -f build/*.pdf
+        git add -f img/code/*
         git checkout --orphan gh-action-result/make-all
-        git rm -rf .git
-        git add *
         git -c user.name='GitHub Action' -c user.email='action@github.com' commit -m "Build current code/paper version"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: gh-action-result/make-all
+        force: true
