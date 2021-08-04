@@ -67,14 +67,14 @@ $(IMG_FILES) : $(shell $(IMG_PATTERN))
 #
 # This block is only needed when building new data tables.
 #
-TABLES_INPUT:=code/data/tables_e1e1 code/data/tables_e2e2
-TABLES_INPUT+=code/data/presel_e2e2
+TABLES_INPUT:=tables_e1e1 tables_e2e2
+TABLES_INPUT+=presel_e2e2
 # presel_e1e1 not used in presentation.
 TABLES_INPUT+=$(HIGGSTABLES_CONFIG)
 
 tables : $(TABLES_INPUT)
 
-code/data/tables_* : $(PER_EVENT_DATA)/z_to_* $(HIGGSTABLES_CONFIG)
+tables_% : $(PER_EVENT_DATA)/z_to_% $(HIGGSTABLES_CONFIG)
 	echo "$?"
 	python3 -c "import higgstables; print(higgstables._version_info)"  # Ensure that we use a good python interpreter before building anything.
 	mkdir -p $(TIMESTAMPED_TABLES)
@@ -82,16 +82,15 @@ code/data/tables_* : $(PER_EVENT_DATA)/z_to_* $(HIGGSTABLES_CONFIG)
 		--data_dir $(TIMESTAMPED_TABLES)/tables_$(shell (basename $<) | rev | cut -d'_' -f 1 | rev)
 	cp -r $(TIMESTAMPED_TABLES)/* code/data/
 	# We need to change the folder's timestamp (the content changed, but the file names stayed).
-	touch $@
+	touch code/data/$@
 
-code/data/presel_* : $(PER_EVENT_DATA)/z_to_* $(HIGGSTABLES_CONFIG) code/preselection_make_tables.py
+presel_% : $(PER_EVENT_DATA)/z_to_% $(HIGGSTABLES_CONFIG) code/preselection_make_tables.py
 	mkdir -p $(TIMESTAMPED_TABLES)
 	python3 code/preselection_make_tables.py $< $(HIGGSTABLES_CONFIG) $(TIMESTAMPED_TABLES)
 	cp -r $(TIMESTAMPED_TABLES)/* code/data/
-	touch $@
+	touch code/data/$@
 
-$(PER_EVENT_DATA)/% :
-ifeq ($(shell test -e $(PER_EVENT_DATA) || echo "not found"),not found)
+ERROR_MSG="ERROR:  Making new event count tables needs access to per-event rootfiles at $(PER_EVENT_DATA). Look into the init.sh options."
+$(PER_EVENT_DATA)/z_to_% :
 	# The rootfiles are large and thus only available on the LLR servers.
-	$(error Making new event count tables needs access to per-event rootfiles at $(PER_EVENT_DATA). Look into the init.sh options)
-endif
+	@if ! [ -e $(PER_EVENT_DATA) ]; then echo $(ERROR_MSG) & exit 1; fi
