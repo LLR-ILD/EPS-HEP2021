@@ -1,16 +1,18 @@
 \documentclass[11pt, aspectratio=169]{beamer}
 \usepackage[french,noconfigs]{babel}
-\usepackage{presentation/beamerx}
+\usepackage{beamerx}
   \setbeamercovered{invisible}
-\usepackage{presentation/jonas}
+\usepackage{jonas}
 
 \graphicspath{
-    {img/code/}              % Figures produced by me, with cod from the repo.
-    {img/extern/}            % Figures that I did not create myself
-    {img/extern/beamerx/}   % Necessary for the theme.
+    {../img/code/}              % Figures produced by me, with cod from the repo.
+    {../img/extern/}            % Figures that I did not create myself
+    {../img/extern/beamerx/}   % Necessary for the theme.
 }
 % \newcommand*\InputBiasTable[1]{\input{img/bias_tables/#1}}
-\newcommand*\InputBiasTable[1]{\input{img/code/#1}}
+\newcommand*\InputBiasTable[1]{\input{../img/code/#1}}
+\newcommand*\FeynmanHiggsstrahlung{\input{feynman_higgsstrahlung.tex}}
+\newcommand*\InputSlide[1]{\input{#1}}
 
 \title[EPS-HEP2021]{
     A combined fit to the Higgs Branching Ratios at ILD
@@ -21,30 +23,30 @@
 \begin{document}
 \maketitle
 \xsection{myblue}{Intro\-duction}
-    \input{presentation/ilc.tex}
-    \input{presentation/ild.tex}
-    \input{presentation/higgsstrahlung.tex}
+    \InputSlide{ilc.tex}
+    \InputSlide{ild.tex}
+    \InputSlide{higgsstrahlung.tex}
 \xsection{myblue}{Event selection}
-    \input{presentation/selection.tex}
+    \InputSlide{selection.tex}
 \xsection{myblue}{Idea}
-    \input{presentation/idea_Higgs_all_in_one.tex}
+    \InputSlide{idea_Higgs_all_in_one.tex}
 \xsection{myblue}{Implemen\-tation}
-    \input{presentation/implementation.tex}
+    \InputSlide{implementation.tex}
 \xsection{myblue}{Fit}
-    \input{presentation/fit_setup.tex}
-    \input{presentation/fit_results.tex}
-    \input{presentation/fit_check_toys.tex}
-    \input{presentation/fit_change_bb_ww.tex}
-    \input{presentation/fit_dependency.tex}
+    \InputSlide{fit_setup.tex}
+    \InputSlide{fit_results.tex}
+    \InputSlide{fit_check_toys.tex}
+    \InputSlide{fit_change_bb_ww.tex}
+    \InputSlide{fit_dependency.tex}
 \xsection{myblue}{Conclusion}
-    \input{presentation/conclusion.tex}
+    \InputSlide{conclusion.tex}
 
 \newcounter{finalframe}\setcounter{finalframe}{\value{framenumber}}
 \xsection{myblue}{Back-up}[pr_ilc_cavity_resized]
-    \input{presentation/backup/expected_counts_e2e2.tex}
-    \input{presentation/backup/correlations.tex}
-    \input{presentation/backup/comparison_to_global_fit.tex}
-    \input{presentation/backup/higgstrahlung_per_z_decay.tex}
-    \input{presentation/higgsstrahlung_event_display.tex}
+    \InputSlide{backup/expected_counts_e2e2.tex}
+    \InputSlide{backup/correlations.tex}
+    \InputSlide{backup/comparison_to_global_fit.tex}
+    \InputSlide{backup/higgstrahlung_per_z_decay.tex}
+    \InputSlide{higgsstrahlung_event_display.tex}
 \setcounter{framenumber}{\value{finalframe}}
 \end{document}
