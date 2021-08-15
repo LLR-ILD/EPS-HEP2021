@@ -8,21 +8,26 @@ HIGGSTABLES_CONFIG=code/data/higgstables-config.yaml
 TIMESTAMPED_TABLES=code/tmp/timestamped_tables/$(shell date +%Y-%m-%d-%H%M%S)
 
 TAB_FILES=$(BUILD_DIR)/files_tab.txt
-TEX_FILES=$(BUILD_DIR)/files_tex.txt
+PRESENTATION_FILES=$(BUILD_DIR)/files_latex_presentation.txt
+POSTER_FILES=$(BUILD_DIR)/files_latex_poster.txt
 PY_FILES=$(BUILD_DIR)/files_py.txt
 IMG_FILES=$(BUILD_DIR)/files_img.txt
 
 
-all : images presentation.pdf
+all : images presentation.pdf poster.pdf
 tables-all : tables all
 
-presentation.pdf : presentation.tex $(TEX_FILES) $(IMG_FILES)
-	$(LATEX) --output-directory=$(BUILD_DIR) presentation.tex
-	ln -sf $(BUILD_DIR)/presentation.pdf
+# $(call make_pdf, tex_folder)
+define make_pdf
+  cd $1; $(LATEX) --output-directory=../$(BUILD_DIR) $1.tex
+  ln -sf $(BUILD_DIR)/$1.pdf
+endef
 
-presentation-only : presentation.tex $(TEX_FILES)
-	$(LATEX) --output-directory=$(BUILD_DIR) presentation.tex
-	ln -sf $(BUILD_DIR)/presentation.pdf
+%.pdf : $(BUILD_DIR)/files_latex_%.txt $(IMG_FILES)
+	$(call make_pdf,$*)
+
+presentation-only : $(PRESENTATION_FILES)
+	$(call make_pdf,presentation)
 
 images : preselection fit
 
@@ -49,19 +54,23 @@ clean :
 
 $(TAB_FILES) : $(shell find code/data)
 	mkdir -p $(BUILD_DIR)
-	find code/data -type f | sort > $(TAB_FILES)
+	find code/data -type f | sort > $@
 
-$(TEX_FILES) : $(shell find presentation)
+$(BUILD_DIR)/files_latex_presentation.txt : $(shell find presentation)
 	mkdir -p $(BUILD_DIR)
-	find presentation -type f | sort > $(TEX_FILES)
+	find presentation -type f | sort > $@
+
+$(BUILD_DIR)/files_latex_poster.txt : $(shell find poster)
+	mkdir -p $(BUILD_DIR)
+	find poster -type f | sort > $@
 
 $(PY_FILES) : $(shell find code -maxdepth 2 -name "*.py")
 	mkdir -p $(BUILD_DIR)
-	find code -maxdepth 2 -name "*.py" | sort > $(PY_FILES)
+	find code -maxdepth 2 -name "*.py" | sort > $@
 
 $(IMG_FILES) : $(shell $(IMG_PATTERN))
 	mkdir -p $(BUILD_DIR)
-	$(IMG_PATTERN) -type f | sort > $(IMG_FILES)
+	$(IMG_PATTERN) -type f | sort > $@
 
 # -----------------------------------------------------------------------------
 #
