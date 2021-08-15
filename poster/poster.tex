@@ -1,0 +1,45 @@
+\documentclass[final]{beamer}
+% Some possibly options: orientation=portrait,size=a0,scale=1.4,grid,debug
+\usepackage[orientation=landscape,size=a0]{beamerposter}
+\mode<presentation>{\usetheme{LLR}}
+\usepackage[font=Large,justification=justified]{caption}
+\usepackage{graphicx}
+\usepackage{booktabs}
+
+% TikZ, e.g. for Feynman diagram.
+\usepackage{tikz} % For overlaying images.
+\usetikzlibrary{arrows.meta}
+    \usetikzlibrary{shapes.misc} % For crossing out.
+    \usetikzlibrary{trees} % Feynman diagrams.
+    \usetikzlibrary{decorations.pathmorphing} % Feynman diagrams.
+    \usetikzlibrary{decorations.markings} % Feynman diagrams.
+    \usetikzlibrary{calc} % Here for relative node positioning (labels).
+    \usetikzlibrary{positioning}
+
+\graphicspath{
+    {../img/code/}            % Figures produced by me, with code from the repo.
+    {../img/extern/}          % Figures that I did not create myself.
+    {../img/extern/beamerx/}  % Logos etc, for the theme.
+}
+\newcommand*\FeynmanHiggsstrahlung{\input{../presentation/feynman_higgsstrahlung.tex}}
+\newcommand*\InputBlock[1]{\input{blocks/#1.tex}}
+\newcommand*\InputBiasTable[1]{\input{../img/code/#1}}
+
+\title[Combined Higgs BRs]{A combined fit to the Higgs branching ratios at ILD}
+\author[Jonas Kunath]{Jonas Kunath, on behalf of the ILD concept group}
+\institute[LLR]{Laboratoire Leprince-Ringuet, École Polytechnique}
+\date{\today}
+
+
+\begin{document}\begin{frame}\begin{columns}
+    \Large
+\begin{column}{.47\textwidth}\parbox[t][\columnheight]{\textwidth}{
+    \InputBlock{schematic_overview}
+    \InputBlock{toy_study}
+    \InputBlock{references}
+}\end{column}
+\begin{column}{.53\textwidth}\parbox[t][\columnheight]{\textwidth}{
+    \InputBlock{implementation}
+    \InputBlock{results}
+}\end{column}
+\end{columns}\end{frame}\end{document}
