@@ -18,7 +18,7 @@ repos:
   rev: v4.0.1
   hooks:
   - id: check-added-large-files
-    exclude: ^(img/extern/IDR_ILD_quadrant_new_lstar.pdf|img/extern/pr_ilc_cavity_resized.png)
+    exclude: ^(img/extern/IDR_ILD_quadrant_new_lstar.pdf|img/extern/pr_ilc_cavity_resized.png|panic2021/blocks/banner-panic.png)
   - id: check-case-conflict
   - id: check-merge-conflict
   - id: check-docstring-first

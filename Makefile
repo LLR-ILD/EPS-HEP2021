@@ -1,6 +1,7 @@
 LATEX=pdflatex --file-line-error --shell-escape --synctex=1
 # This directory will be overwritten. Should be new.
 BUILD_DIR=build
+PANIC_PREFIX=$(BUILD_DIR)/panic/PANIC2021_HiggsBRs_JonasKunath
 IMG_PATTERN=find img  \( -wholename "img/code/*" -o -wholename "img/extern/*" \)
 
 PER_EVENT_DATA=code/tmp/per_event_data
@@ -9,12 +10,11 @@ TIMESTAMPED_TABLES=code/tmp/timestamped_tables/$(shell date +%Y-%m-%d-%H%M%S)
 
 TAB_FILES=$(BUILD_DIR)/files_tab.txt
 PRESENTATION_FILES=$(BUILD_DIR)/files_latex_presentation.txt
-POSTER_FILES=$(BUILD_DIR)/files_latex_poster.txt
 PY_FILES=$(BUILD_DIR)/files_py.txt
 IMG_FILES=$(BUILD_DIR)/files_img.txt
 
 
-all : images presentation.pdf poster.pdf
+all : images presentation.pdf poster.pdf panic2021.pdf
 tables-all : tables all
 
 # $(call make_pdf, tex_folder)
@@ -40,6 +40,14 @@ fit : $(TAB_FILES) $(PY_FILES)
 small-toys : $(TAB_FILES) $(PY_FILES)
 	python3 code/fit_and_plot.py code/data 500
 
+panic : panic2021.pdf
+	@# It might be necessary in /etc/ImageMagick-6/policy.xml to comment out
+	@# <!--policy domain="coder" rights="none" pattern="PDF" /-->
+	@mkdir -p dir $(dir $(PANIC_PREFIX))
+	@cp $^ $(PANIC_PREFIX).pdf
+	convert -density 100 $(PANIC_PREFIX).pdf $(PANIC_PREFIX).jpg
+	convert -density 50 $(PANIC_PREFIX).pdf $(PANIC_PREFIX)-small.jpg
+
 .PHONY: clean
 clean :
 	rm -f presentation.pdf
@@ -61,6 +69,10 @@ $(BUILD_DIR)/files_latex_presentation.txt : $(shell find presentation)
 	find presentation -type f | sort > $@
 
 $(BUILD_DIR)/files_latex_poster.txt : $(shell find poster)
+	mkdir -p $(BUILD_DIR)
+	find poster -type f | sort > $@
+
+$(BUILD_DIR)/files_latex_panic2021.txt : $(shell find panic2021)
 	mkdir -p $(BUILD_DIR)
 	find poster -type f | sort > $@
 

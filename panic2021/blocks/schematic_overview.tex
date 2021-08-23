@@ -98,17 +98,13 @@
     \StepTitle{2. Sample creation}
 }
 \newcommand{\BRFitText}{
-    \StepBox{3. BR fit:}{
-        Probability matrix M from simulation\\
-        per bkg and decay mode. \\
-        Minimize $ BR = M \cdot Data$
-    }
+    \StepTitle{3. BR fit:}
 }
 
 
 \begin{block}{Schematic overview}
     \vspace{1em}
-    \resizebox{\textwidth}{!}{
+    \resizebox{0.95\textwidth}{!}{
     \scriptsize
     \begin{tikzpicture}[remember picture]
         \DrawFeynman
@@ -130,7 +126,7 @@
         % The BR fit step
         \node[anchor=north west] (fit txt) at ($(box 2 upper right) + 4*(\RectPad,0)$) {\BRFitText};
         \node[anchor=north west] (fit matrix) at (fit txt.south west) {
-            \includegraphics[height=8cm]{probability_matrix}
+            \includegraphics[height=10cm]{probability_matrix}
         };
         \path let \p1=(fit txt.north east),\p2=(fit matrix.south east) in coordinate (box 3 lower right) at ({max(\x1,\x2)},\y2);
         \draw[box] ($(fit txt.north west) + (-\RectPad,\RectPad)$) rectangle ($(box 3 lower right) + (\RectPad,-\RectPad)$) {};
@@ -138,5 +134,5 @@
         \draw[-{Triangle[width=18pt,length=8pt]}, line width=8pt](arrow start) -- ($(arrow start) + 4*(\RectPad, 0)$);
       \end{tikzpicture}
     }
-    \vspace{0em}
+    \vspace{0.5em}
 \end{block}
