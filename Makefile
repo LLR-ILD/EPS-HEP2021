@@ -14,7 +14,7 @@ PY_FILES=$(BUILD_DIR)/files_py.txt
 IMG_FILES=$(BUILD_DIR)/files_img.txt
 
 
-all : images presentation.pdf poster.pdf panic2021.pdf
+all : images presentation.pdf poster.pdf panic2021.pdf proceedings.pdf
 tables-all : tables all
 
 # $(call make_pdf, tex_folder)
@@ -50,9 +50,15 @@ panic : panic2021.pdf
 
 .PHONY: clean
 clean :
-	rm -f presentation.pdf
+	rm -f *.pdf
 	rm -f $(TAB_FILES) $(TEX_FILES) $(PY_FILES) $(IMG_FILES)
+	rm -f $(BUILD_DIR)/files_latex_*.txt
+	rm -f $(BUILD_DIR)/panic/*
+	rmdir $(BUILD_DIR)/panic
+	rm -f $(BUILD_DIR)/panic2021.*
+	rm -f $(BUILD_DIR)/poster.*
 	rm -f $(BUILD_DIR)/presentation.*
+	rm -f $(BUILD_DIR)/proceedings.*
 	rmdir $(BUILD_DIR)
 
 	rm -rf img/code
@@ -75,6 +81,10 @@ $(BUILD_DIR)/files_latex_poster.txt : $(shell find poster)
 $(BUILD_DIR)/files_latex_panic2021.txt : $(shell find panic2021)
 	mkdir -p $(BUILD_DIR)
 	find poster -type f | sort > $@
+
+$(BUILD_DIR)/files_latex_proceedings.txt : $(shell find proceedings)
+	mkdir -p $(BUILD_DIR)
+	find proceedings -type f | sort > $@
 
 $(PY_FILES) : $(shell find code -maxdepth 2 -name "*.py")
 	mkdir -p $(BUILD_DIR)
