@@ -1,4 +1,4 @@
-LATEX=pdflatex --file-line-error --shell-escape --synctex=1
+LATEX=latexmk -pdf -pdflatex="pdflatex --file-line-error --shell-escape --synctex=1" -use-make
 # This directory will be overwritten. Should be new.
 BUILD_DIR=build
 PANIC_PREFIX=$(BUILD_DIR)/panic/PANIC2021_HiggsBRs_JonasKunath
