@@ -141,6 +141,7 @@ def plot_efficiency(presel_tables: WeightedPreselectionTables):
         ax.set_ylim((0, 1))
         ax.legend(bbox_to_anchor=(1, 0.9), loc="upper right")
         save_hook(fig, f"presel_{presel_tables.name}_eff_{i}")
+    return dict(efficiency=efficiency, purity=purity)
 
 
 def get_latex(string):
@@ -198,7 +199,9 @@ def plot_preselection_steps(presel_tables: WeightedPreselectionTables):
     nrows = 1 + (presel_tables.n_steps - 1) // 2
     var_fig, axs = plt.subplots(ncols=2, nrows=nrows, figsize=(10, 4 * nrows))
     axs = axs.flatten()
-    add_ild(axs[0])
+    proc_args = dict(ncols=3, nrows=2, figsize=(15, 4 * 2))
+    fig_proceedings, axs_proceedings = plt.subplots(**proc_args)
+    axs_proceedings = axs_proceedings.flatten()
     group_order = None
     for i, (step_table, step_name, binning) in enumerate(
         presel_tables.iter_steps(), start=1
@@ -211,24 +214,49 @@ def plot_preselection_steps(presel_tables: WeightedPreselectionTables):
         else:
             pattern = re.compile(">|<|>=|<=|==")
             var_name = pattern.split(step_name)[0]
-        group_order = plot_var(
-            step_table,
-            step_name,
-            binning,
-            signal_process,
-            axs[i - 1],
-            group_order,
-        )
-        axs[i - 1].set_xlabel(get_latex(var_name), fontsize=18)
-        axs[i - 1].set_label("weighted bin counts")
-        axs[i - 1].set_title(f"step {i}: {get_latex(step_name)}")
-    axs[0].legend(bbox_to_anchor=(1, 0.95), loc="upper right")
+        for ax in [axs[i - 1], axs_proceedings[i - 1]]:
+            group_order = plot_var(
+                step_table,
+                step_name,
+                binning,
+                signal_process,
+                ax,
+                group_order,
+            )
+            ax.set_xlabel(get_latex(var_name), fontsize=18)
+            ax.set_label("weighted bin counts")
+            ax.set_title(f"step {i}: {get_latex(step_name)}")
+    for ax in [axs[0], axs_proceedings[0]]:
+        ax.legend(bbox_to_anchor=(1, 0.95), loc="upper right")
+        add_ild(ax)
     var_fig.tight_layout()
     for ax in axs:
         ax.set_visible(False)
     for i in range(presel_tables.n_steps):
         axs[i].set_visible(True)
         save_hook(var_fig, f"presel_{presel_tables.name}_{i + 1}", tight_layout=False)
+    return fig_proceedings
+
+
+def plot_preselection_for_proceedings(
+    presel_tables: WeightedPreselectionTables,
+    fig_proceedings,
+    eff_pur_dict,
+):
+    efficiency = eff_pur_dict["efficiency"]
+    purity = eff_pur_dict["purity"]
+    eff_pur = efficiency * purity
+    x = np.arange(len(efficiency))
+    ax = fig_proceedings.get_axes()[-1]
+    ax.plot(x, efficiency, label="efficiency", marker="o")
+    ax.plot(x, purity, label="purity", marker="d")
+    ax.plot(x, eff_pur, label="eff * pur", marker="*")
+    ax.set_xticks(x)
+    ax.set_xlabel("step", fontsize=18)
+    ax.set_xlim((min(x) - 0.5, max(x) + 0.5))
+    ax.set_ylim((0, 1))
+    ax.legend(bbox_to_anchor=(1, 0.9), loc="upper right")
+    save_hook(fig_proceedings, f"presel_{presel_tables.name}_for_proceedings")
 
 
 if __name__ == "__main__":
@@ -239,6 +267,7 @@ if __name__ == "__main__":
         if presel_table_dir.stem.startswith("presel_"):
             found_a_presel = True
             wpt = WeightedPreselectionTables(presel_table_dir, config_file)
-            plot_preselection_steps(wpt)
-            plot_efficiency(wpt)
+            eff_pur_dict = plot_efficiency(wpt)
+            fig_proceedings = plot_preselection_steps(wpt)
+            plot_preselection_for_proceedings(wpt, fig_proceedings, eff_pur_dict)
     assert found_a_presel
