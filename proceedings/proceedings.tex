@@ -2,11 +2,12 @@
 \usepackage{pos}
 \usepackage{booktabs}  % For \toptrule etc.
 \usepackage{xspace}
+\usepackage[shortcuts]{extdash}  % For \Hyphdash* - Dash that disallows line break.
 \newcommand{\eV}{\text{e\kern-0.15ex V}\xspace}
 \newcommand{\GeV}{\text{G\eV}\xspace}
 \graphicspath{{../img/code/}}
 
-\title{A combined fit to the Higgs branching ratios at the International Large Detector with backgrounds}
+\title{A combined fit to the Higgs branching ratios at the International Large Detector at ILC with backgrounds}
 \ShortTitle{Combined Higgs BRs at ILD}
 
 \author*[a,\dag]{Jonas Kunath}
@@ -21,17 +22,17 @@ Route de Saclay, 91120 Palaiseau, France}
 \emailAdd{kunath@llr.in2p3.fr}
 
 \abstract{
-The Higgsstrahlung process for the production of Higgs bosons at a lepton collider
+The Higgsstrahlung process as a Higgs boson production mechanism at a lepton collider
 provides access to a high-purity Higgs boson sample.
-This sample can be constructed in such a way that it is
-impartial to the type of the Higgs decay.
-By allocating the events of the sample to classes defined within the sample,
-we create a binned distribution.
+The Higgs branching ratios can be measured simultaneously
+by analysing the data inclusively.
+For this purpose, we divide the sample into classes that
+distinguish reasonably well between the Higgs decay modes.
 These class counts are associated to the Higgs branching ratios through a
 model-independent fit.
 The fit provides an estimate for each of the Higgs branching ratios with
 the full matrix of statistical correlations between the channels.
-By design, these are pure branching ratio measurement,
+These are pure branching ratio measurements,
 independent of any Higgs production mode cross section measurement.
 
 We present a study on data simulated for the ILD concept
@@ -54,17 +55,17 @@ The International Linear Collider (ILC) will initially collide polarized beams
 of electrons and positrons at center-of-mass energy $\sqrt{s}=250~\GeV$ (ILC250).
 This energy will then be increased up to $\sqrt{s}=500~\GeV$~\cite{ILC_Staging_2017}.
 The ILD concept group proposes the International Linear Detector~\cite{ILD_DBD,ILD_IDR}
-as a detector for the $e^+e^-$ interaction point.
-Its silicon trackers allow to measure impact parameters to less than 5~{\textmu}m.
+as a detector for the ILC.
+Its silicon trackers allow to measure impact parameters to less than 5~{\textmu}m~\cite{ILD_IDR}.
 With the help of a Time Projection Chamber, transverse momenta of charged particles
-can be measured with a resolution of $\sigma(1/p_T) = 2 \cdot 10^{-5} \GeV^{-1}$.
+can be measured with a resolution of $\sigma(1/p_T) = 2 \cdot 10^{-5}~\GeV^{-1}$~\cite{ILD_IDR}.
 The highly granular electromagnetic and hadronic calorimeters
-are based on the concept of particle flow
-for particle reconstruction~\cite{ParticleFlow}.
-A jet energy resolution of 3-4\% can be achieved.
+are based on the concept of Particle Flow
+for track reconstruction particle identification~\cite{ParticleFlow}.
+A jet energy resolution of 3-4\% can be achieved~\cite{ILD_IDR}.
 The surrounding coil provides a magnetic field of 3~T.
 
-Here we focus on the ILC250.
+Here we focus on the Higgs boson production capabilities at the ILC250.
 It will produce a large number of Higgs boson events.
 The dominant Higgs production mode is Higgsstrahlung: $e^+e^- \to ZH$.
 The background rates are low compared to hadron colliders.
@@ -76,7 +77,7 @@ Higgs decay processes.
 As background, we consider SM processes
 with two or four fermions in the final state.
 All events are weighted according to their SM cross sections
-and to 2000~fb$^{-1}$ integrated luminosity.
+and to 2000~fb$^{-1}$ of integrated luminosity.
 While this is the integrated luminosity from the 20-year running scenario,
 the time would realistically be shared
 between left-polarized
@@ -92,9 +93,9 @@ The fragmentation and hadronization of final-state quarks and gluons
 is performed with PYTHIA 6.422~\cite{pythia}.
 The ILD detector geometry is described with DD4hep~\cite{DD4hep}
 and simulated in GEANT4~\cite{GEANT4}.
-Event reconstruction is performed with ILCSoft v02-02,%~\cite{ILCSoft},
+Event reconstruction is performed with ILCSoft v02\Hyphdash*02, %~\cite{ILCSoft},
 which includes PandoraPFA~\cite{PandoraPFA} for
-the construction of particle flow objects
+the reconstruction of particle flow objects
 and LCFIPlus~\cite{LCFIPlus} for flavor tagging.
 
 
@@ -103,19 +104,19 @@ and LCFIPlus~\cite{LCFIPlus} for flavor tagging.
 We focus on Higgsstrahlung events in which the primary Z boson decays leptonically,
 $Z \to e^+ e^-$ or $Z \to \mu^+ \mu^-$.
 Event variables can be reconstructed after the isolated lepton pair is identified
-and potentially combined with FSR photon candidates.
+and combined with FSR photon candidates.
 Figure~\ref{fig:presel} shows the distribution of signal and background for
-$Z \to \mu^+ \mu^-$ in the event variables
+$Z \to \mu^+ \mu^-$ for the variables
 that were built from the primary Z boson's decay products.
-The cuts from the previous steps are already applied in the subsequent steps.
-Lepton colliders have the advantage that the initial state kinematics are known.
-This is used when creating the recoil mass:
+% The cuts from the previous steps are already applied in the subsequent steps.
+Lepton colliders have the advantage that the initial state kinematics is known.
+This is used when defining the recoil mass:
 $M_{\mathrm{recoil}}^2 = s + M_Z^2 - 2\sqrt{s} \cdot E_Z$.
 For signal events, the distribution peaks at $M_{\mathrm{recoil}} = M_{\mathrm{Higgs}}$.
-The presented cuts lead to a sample
-with sbout 50\% purity at 50\% signal efficiency.
-By construction, the efficiency is constant over Higgs decay modes
-and the resulting sample thus unbiased.
+The cuts presented in Figure~\ref{fig:presel} lead to a sample
+with about 50\% purity at 50\% signal efficiency.
+By definition, the efficiency is constant over Higgs decay modes
+and the resulting sample is thus unbiased.
 
 \begin{figure}[ht]
     \centering
@@ -126,11 +127,13 @@ and the resulting sample thus unbiased.
     }\label{fig:presel}
 \end{figure}
 
-We will now build a binned distribution from the sample,
+We will now build a binned distribution of expected counts from the sample,
 as shown in Figure~\ref{fig:box_counts}.
 Each bin contains the events that fall into a specific class.
 The class definitions can be found in the appendix of~\cite{LCWS_combined_Higgs}.
-A final bin contains all events that do not match any class definition.
+They were chosen so that they distinguish
+relatively well between the considered Higgs decay modes.
+The last bin contains all events that do not match any class definition.
 The relative sensitivity to a Higgs decay mode varies between bins.
 Next, we will present a fit that uses this variation in sensitivity
 to derive the Higgs branching ratios.
@@ -161,6 +164,8 @@ to derive the Higgs branching ratios.
         The starting values of the fit are always the Standard Model Higgs BRs.
         The considered scenarios are the SM BRs (left)
         and a BSM scenario described in the text.
+        For the BSM scenario, the BRs that were injected in the data sample
+        are labeled as \textit{Data truth}.
         \\
         Bottom row: The absolute statistical uncertainties
         of the fit per branching ratio.
@@ -168,12 +173,13 @@ to derive the Higgs branching ratios.
 \end{figure}
 
 The class probabilities for each Higgs decay mode or background process can
-be determined using the Monte Carlo simulated data.\footnote{
+be determined using simulated events\footnote{
     The simulated events are needed both here and later on as a placeholder
     for the detector data.
     To prevent overfitting, we split the data set
     into two equal but statistically independent parts.
 }
+obtained by following the procedure outlined in Section~\ref{sec:Implementation}.
 They are combined into a matrix, where each column corresponds to one process.
 Applying the truth vector of the process counts to this matrix yields the class counts.
 Conversely, given the class counts, a fit can be performed to gain access to the
@@ -200,7 +206,7 @@ They can be converted into mean values and uncertainties for each of the BRs.
     \caption{
         Left: Validation of the uncertainty from
         a fit to the expected event counts scenario using a toy study.
-        \\
+        % \\
         Right:
         Preliminary results of a \texttt{MINUIT} fit to the expected event counts.
         The table gives the fitted values of the Higgs BRs
@@ -231,8 +237,8 @@ Its standard deviation is obtained through the covariance matrix of the fit
 at the optimum.
 The blue Gaussian and the histogram agree well, indicating that the EEC fit is stable.
 The black line also indicates the position of the optimum of the EEC fit.
-As expected, it agrees with the BR value that was put
-into the simulation (dotted gray line).\footnote{
+As expected, it agrees with the BR value that was
+input to the simulation (dotted gray line).\footnote{
     Up to a small deviation due to the finite size of the simulated data sets.
 }
 
@@ -246,10 +252,10 @@ could be added to obtain explicit upper limits for them.
 
 \section{Conclusion}\label{sec:conclusion}
 The Higgsstrahlung process at a lepton collider allows the measurement of
-all Higgs branching ratios (BRs) at once from within the same unbiased sample.
+all Higgs branching ratios (BRs) at once within the same unbiased sample.
 At a Higgs factory such as the ILC250, the method presented in this contribution
-can be applied to peform precision measurements of the observed BRS
-and to obtain upper limits for further BRs.
+can be applied to perform precision measurements of the observed BRs
+and to obtain upper limits for additional Higgs decays.
 It is a pure BR measurement, independent of any production cross section measurement.
 The results can be combined with any analysis that does not use the
 $ZH \to \left( e^+ e^-, \mu^+ \mu^- \right)$ channels.
