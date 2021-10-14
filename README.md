@@ -10,10 +10,13 @@ Several assets can be directly accessed without running the code:
 
 - [**Download**](https://github.com/LLR-ILD/EPS-HEP2021/releases/download/v1.0/presentation.pdf)
   the pdf presentation given at EPS-HEP2021.
-- [**Access**](https://github.com/LLR-ILD/EPS-HEP2021/tree/gh-action-result/make-all/build)
+- [**Access**](https://github.com/LLR-ILD/EPS-HEP2021/tree/gh-action-result/make-all-master/build)
   the _current_ version of the documents from this repository.
+- [**Access**](https://github.com/LLR-ILD/EPS-HEP2021/tree/gh-action-result/make-all-eps/build)
+  the _current_ version of the documents based on the eps-time data
+  (e.g. no invisible Higgs decays considered).
 
-In all cases you might alternatively want to navugate to the parent of the link
+In all cases you might alternatively want to navigate to the parent of the link
 to view byproducts of the artifact creation, including the raw figures.
 
 ## Usage
@@ -25,13 +28,13 @@ source init.sh  # Always necessary, but should be fast after the first time.
 make
 ```
 
-Some targets are provided for covenience
+Some targets are provided for convenience
 (e.g. `make fit` to recreate the fit images without rebuilding the presentation).
 If needed, they can be found in `Makefile`.
 
 ## Building new tables
 
-To change the tables programatically (define different categories),
+To change the tables programmatically (define different categories),
 you need access to the pre-event root files.
 Some paths for obtaining them are are outlined in `init.sh` and can be steered
 through arguments for this script.

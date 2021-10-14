@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+      - eps
 
 jobs:
   make-all:
@@ -27,17 +28,22 @@ jobs:
       run: |
         make all
 
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+
     - name: Commit to orphan branch
       run: |
         echo $(ls -lah)
         echo $(ls -lah build)
         git add -f build/*.pdf
         git add -f img/code/*
-        git checkout --orphan gh-action-result/make-all
+        git checkout --orphan gh-action-result/make-all-${GITHUB_REF##*/}
         git -c user.name='GitHub Action' -c user.email='action@github.com' commit -m "Build current code/paper version"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: gh-action-result/make-all
+        branch: gh-action-result/make-all-${{ steps.extract_branch.outputs.branch }}
         force: true
