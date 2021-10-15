@@ -5,7 +5,8 @@ PANIC_PREFIX=$(BUILD_DIR)/panic/PANIC2021_HiggsBRs_JonasKunath
 IMG_PATTERN=find img  \( -wholename "img/code/*" -o -wholename "img/extern/*" \)
 
 PER_EVENT_DATA=code/tmp/per_event_data
-HIGGSTABLES_CONFIG=code/data/higgstables-config.yaml
+RAW_DATA_DIR=data
+HIGGSTABLES_CONFIG=$(RAW_DATA_DIR)/higgstables-config.yaml
 TIMESTAMPED_TABLES=code/tmp/timestamped_tables/$(shell date +%Y-%m-%d-%H%M%S)
 
 TAB_FILES=$(BUILD_DIR)/files_tab.txt
@@ -32,13 +33,13 @@ presentation-only : $(PRESENTATION_FILES)
 images : preselection fit
 
 preselection : $(TAB_FILES) $(PY_FILES) $(HIGGSTABLES_CONFIG)
-	python3 code/preselection_plots.py code/data $(HIGGSTABLES_CONFIG)
+	python3 code/preselection_plots.py $(RAW_DATA_DIR) $(HIGGSTABLES_CONFIG)
 
 fit : $(TAB_FILES) $(PY_FILES)
-	python3 code/fit_and_plot.py code/data
+	python3 code/fit_and_plot.py $(RAW_DATA_DIR)
 
 small-toys : $(TAB_FILES) $(PY_FILES)
-	python3 code/fit_and_plot.py code/data 500
+	python3 code/fit_and_plot.py $(RAW_DATA_DIR) 500
 
 panic : panic2021.pdf
 	@# It might be necessary in /etc/ImageMagick-6/policy.xml to comment out
@@ -66,9 +67,9 @@ clean :
 	rm -rf code/tmp/timestamped_tables
 	@echo INFO: $(PER_EVENT_DATA) can be expensive to obtain and is thus not removed.
 
-$(TAB_FILES) : $(shell find code/data)
+$(TAB_FILES) : $(shell find $(RAW_DATA_DIR))
 	mkdir -p $(BUILD_DIR)
-	find code/data -type f | sort > $@
+	find $(RAW_DATA_DIR) -type f | sort > $@
 
 $(BUILD_DIR)/files_latex_presentation.txt : $(shell find presentation)
 	mkdir -p $(BUILD_DIR)
@@ -111,15 +112,15 @@ tables_% : $(PER_EVENT_DATA)/z_to_% $(HIGGSTABLES_CONFIG)
 	mkdir -p $(TIMESTAMPED_TABLES)
 	higgstables $< --config $(HIGGSTABLES_CONFIG) \
 		--data_dir $(TIMESTAMPED_TABLES)/tables_$(shell (basename $<) | rev | cut -d'_' -f 1 | rev)
-	cp -r $(TIMESTAMPED_TABLES)/* code/data/
+	cp -r $(TIMESTAMPED_TABLES)/* $(RAW_DATA_DIR)/
 	# We need to change the folder's timestamp (the content changed, but the file names stayed).
-	touch code/data/$@
+	touch $(RAW_DATA_DIR)/$@
 
 presel_% : $(PER_EVENT_DATA)/z_to_% $(HIGGSTABLES_CONFIG) code/preselection_make_tables.py
 	mkdir -p $(TIMESTAMPED_TABLES)
 	python3 code/preselection_make_tables.py $< $(HIGGSTABLES_CONFIG) $(TIMESTAMPED_TABLES)
-	cp -r $(TIMESTAMPED_TABLES)/* code/data/
-	touch code/data/$@
+	cp -r $(TIMESTAMPED_TABLES)/* $(RAW_DATA_DIR)/
+	touch $(RAW_DATA_DIR)/$@
 
 ERROR_MSG="ERROR:  Making new event count tables needs access to per-event rootfiles at $(PER_EVENT_DATA). Look into the init.sh options."
 $(PER_EVENT_DATA)/z_to_% :
