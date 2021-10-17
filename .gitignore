@@ -1,4 +1,6 @@
 build
 code/.venv
+code/data
 code/tmp
 img/code
+/*.pdf

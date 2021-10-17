@@ -70,3 +70,4 @@ repos:
   hooks:
     - id: mypy
       exclude: ^docs/
+      additional_dependencies: [types-pyYAML]

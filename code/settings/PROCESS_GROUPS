@@ -1,0 +1,53 @@
+2f leptonic:
+- P2f_z_l
+4f leptonic:
+- P4f_sw_l
+- P4f_sze_l
+- P4f_szeorsw_l
+- P4f_sznu_l
+- P4f_ww_l
+- P4f_zz_l
+- P4f_zzorww_l
+4f semileptonic:
+- P4f_sw_sl
+- P4f_zz_sl
+Pe2e2h:
+- Pe2e2h
+aa:
+- Pe1e1h_aa
+- Pe2e2h_aa
+- aa
+az:
+- Pe1e1h_az
+- Pe2e2h_az
+- az
+bb:
+- Pe1e1h_bb
+- Pe2e2h_bb
+- bb
+cc:
+- Pe1e1h_cc
+- Pe2e2h_cc
+- cc
+e2e2:
+- Pe1e1h_e2e2
+- Pe2e2h_e2e2
+- e2e2
+e3e3:
+- Pe1e1h_e3e3
+- Pe2e2h_e3e3
+- e3e3
+gg:
+- Pe1e1h_gg
+- Pe2e2h_gg
+- gg
+other higgs:
+- Pqqh_zz
+ww:
+- Pe1e1h_ww
+- Pe2e2h_ww
+- ww
+zz:
+- Pe1e1h_zz
+- Pe2e2h_zz
+- zz
