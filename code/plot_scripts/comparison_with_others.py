@@ -33,7 +33,7 @@ global_fit_ilc_250 = {  # Table 1 in J.Tian & K. Fujii. https://www.sciencedirec
     "zz": 0.08,
     "ww": 0.048,
     # "ΓH":       0.11,
-    # "inv.":   0.0095,
+    "inv": 0.0095,
 }
 for k, v in global_fit_ilc_250.items():
     # Scale errors to the H20 ILC250 scenario that I am considering.
@@ -91,7 +91,7 @@ peskin_ilc_zh = {  # https://arxiv.org/abs/1207.2516
     "gg": 0.06,  # σ(ZH)BR(bb)
     "aa": 0.38,  # σ(ZH)BR(γγ)
     "ww": 0.064,  # σ(ZH)BR(WW)
-    # "inv.":   0.005,  # σ(ZH)BR(inv.)
+    "inv": 0.005,  # σ(ZH)BR(inv.)
 }
 for k, v in peskin_ilc_zh.items():
     # Scale errors to the H20 ILC250 scenario that I am considering.

@@ -13,6 +13,7 @@ fancy_names_path = Path(sys.argv[2])
 with fancy_names_path.open() as f:
     fancy_names = yaml.safe_load(f)
 data = {}
+is_higgs_decay = {}
 for file in map(Path, sys.argv[3:]):
     assert file.is_file()
     assert file.suffix == ".csv"
@@ -20,6 +21,9 @@ for file in map(Path, sys.argv[3:]):
 
     sample_data = pd.read_csv(file, index_col=0)
     sample_data.pop("failed_presel")
+    is_higgs_decay[file.stem.replace("counts_", "")] = sample_data.pop("is_higgs_decay")
+    n_counts = sample_data.pop("n_counts")
+    sample_data = sample_data.mul(n_counts, axis=0)
     data[file.stem.replace("counts_", "")] = sample_data
 
 
@@ -27,11 +31,12 @@ fig, ax = plt.subplots(figsize=(4, 4))
 sample_counts = pd.DataFrame()
 higgs_decay_names: typing.List[str] = []
 for channel in data:
-    is_higgs_decay = data[channel].pop("is_higgs_decay")
     if len(higgs_decay_names) == 0:
-        higgs_decay_names = data[channel].index[is_higgs_decay]
+        higgs_decay_names = data[channel].index[is_higgs_decay[channel]]
     else:
-        assert set(higgs_decay_names) == set(data[channel].index[is_higgs_decay])
+        assert set(higgs_decay_names) == set(
+            data[channel].index[is_higgs_decay[channel]]
+        )
     sample_counts[channel] = data[channel].sum(axis=1)
 
 y = np.arange(len(data))

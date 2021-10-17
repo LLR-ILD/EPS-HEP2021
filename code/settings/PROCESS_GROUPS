@@ -41,6 +41,10 @@ gg:
 - Pe1e1h_gg
 - Pe2e2h_gg
 - gg
+inv:
+- Pe1e1h_inv
+- Pe2e2h_inv
+- inv
 other higgs:
 - Pqqh_zz
 ww:

@@ -1,4 +1,4 @@
-,cross section [fb],unselected,e2e2_tight_2,e2e2_tight_1,e2e2_loose,inv_tight,aZ_tight_against_Z,aZ_tight_against_nothing,aZ_tight_between,bb_tight,bb,cc_tight,isolep1,isolep2,isolep_many,aa_tight,aa,isophoton1,isophoton_many,tau,light_quark_few_hadrons,light_quark_many_hadrons,light_quark_intermediate_hadrons,few_hadrons,many_hadrons,intermediate_hadrons
+,cross section [fb],unselected,e2e2_tight_2,e2e2_tight_1,e2e2_loose,inv_tight,aZ_tight_against_Z,aZ_tight_against_nothing,aZ_tight_between,bb_tight,bb,cc_tight,isolep1,isolep2,isolep_many,aa_tight,aa,isophoton1,isophoton_many,tau,light_quark_few_hadrons,light_quark_many_hadrons,light_quark_intermediate_hadrons,few_hadrons,many_hadrons,rest
 P4f_sw_l,63.483169,139990,0,0,0,4,0,4,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0
 P4f_sw_sl,190.63749,199004,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 P4f_sze_l,5629.24,4991478,0,0,0,7,4,5,5,0,0,0,34,38,0,3,5,29,15,6,10,0,0,20,0,0
@@ -10,5 +10,6 @@ Pe1e1h_cc,0.0180187292,94252,0,0,0,0,218,29,151,3,131,600,6,0,0,0,0,1041,116,0,1
 Pe1e1h_e2e2,0.000135919826,97952,0,0,0,0,145,9,40,0,0,0,76,1610,1,0,0,0,0,0,0,0,0,0,0,0
 Pe1e1h_e3e3,0.0390925371,95707,0,0,0,1,33,238,248,6,87,16,693,28,0,0,4,944,113,922,275,0,1,1489,0,26
 Pe1e1h_gg,0.0510634575,94345,0,0,0,0,229,31,128,65,131,19,4,0,0,0,0,989,95,0,36,406,1343,19,570,1090
+Pe1e1h_inv,0.0,4348,0,0,0,77,0,24,0,0,1,0,0,0,0,0,0,52,9,0,54,0,0,16,0,2
 Pe1e1h_ww,0.133425884,95761,0,0,0,1,130,110,145,1,74,29,1190,124,0,0,0,671,63,5,103,73,526,244,190,1054
 Pe1e1h_zz,0.0163353185,95674,0,0,0,72,148,134,119,340,269,49,160,331,10,0,0,921,87,7,360,53,550,374,147,942

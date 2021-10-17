@@ -11,7 +11,7 @@ higgstables:
     eLpR: "eLpR/*/simple_event_vector.root"
     eRpL: "eRpL/*/simple_event_vector.root"
     eRpR: "eRpR/*/simple_event_vector.root"
-  ignored-processes: [Pe2e2h, Pe1e1h, Pe2e2h_inv, Pe1e1h_inv]  # Avoid duplication with the pre-decay files.
+  ignored-processes: [Pe2e2h, Pe1e1h]  # Avoid duplication with the pre-decay files.
   machine: "E250-SetA"  # For cross section column.
   anchors:
     # Collect here (or anywhere else) anchors (&var) for future aliasing (*var).
@@ -120,6 +120,6 @@ higgstables:
     many_hadrons:
     - *no_iso
     - n_charged_hadrons > 40
-    intermediate_hadrons:
-    - *no_iso
-    # rest: n_iso_leptons >= 0  # Cannot have empty expression -> Always true.
+    # intermediate_hadrons:
+    # - *no_iso
+    rest: n_iso_leptons >= 0  # Cannot have empty expression -> Always true.

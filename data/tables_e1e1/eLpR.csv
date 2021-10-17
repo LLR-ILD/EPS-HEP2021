@@ -1,4 +1,4 @@
-,cross section [fb],unselected,e2e2_tight_2,e2e2_tight_1,e2e2_loose,inv_tight,aZ_tight_against_Z,aZ_tight_against_nothing,aZ_tight_between,bb_tight,bb,cc_tight,isolep1,isolep2,isolep_many,aa_tight,aa,isophoton1,isophoton_many,tau,light_quark_few_hadrons,light_quark_many_hadrons,light_quark_intermediate_hadrons,few_hadrons,many_hadrons,intermediate_hadrons
+,cross section [fb],unselected,e2e2_tight_2,e2e2_tight_1,e2e2_loose,inv_tight,aZ_tight_against_Z,aZ_tight_against_nothing,aZ_tight_between,bb_tight,bb,cc_tight,isolep1,isolep2,isolep_many,aa_tight,aa,isophoton1,isophoton_many,tau,light_quark_few_hadrons,light_quark_many_hadrons,light_quark_intermediate_hadrons,few_hadrons,many_hadrons,rest
 P2f_z_l,21214.001,9989980,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,4,0,0,10,0,0,0,0,0
 P4f_sw_l,3421.9693,4990578,0,0,0,348,1,91,5,0,0,0,4,0,0,0,0,294,39,3,217,0,4,73,0,3
 P4f_sw_sl,10264.016,4975067,0,0,0,0,0,2,1,0,0,0,0,0,0,0,0,4,0,0,7,0,6,4,0,9
@@ -16,6 +16,7 @@ Pe1e1h_cc,0.51070609,70495,0,0,0,0,1318,218,838,31,750,3305,34,1,0,0,0,5762,502,
 Pe1e1h_e2e2,0.00385238504,88862,0,0,0,0,847,70,273,0,0,0,414,9357,2,1,0,0,0,0,2,0,0,5,0,0
 Pe1e1h_e3e3,1.10800249,72358,0,0,0,4,187,1482,1332,29,508,117,3555,143,0,10,19,4965,610,5300,1446,0,3,8583,1,179
 Pe1e1h_gg,1.44729511,70691,0,0,0,0,1260,144,717,333,657,89,40,0,0,0,0,5563,464,0,156,2329,7605,84,3214,5959
+Pe1e1h_inv,0.0,3131,0,0,0,556,0,128,0,0,0,0,1,0,0,0,0,271,18,0,301,0,3,97,0,2
 Pe1e1h_ww,3.78169907,74604,0,0,0,0,781,662,894,14,310,175,6275,692,4,0,0,3738,317,38,639,328,3186,1450,988,5650
 Pe1e1h_zz,0.462993064,72302,0,0,3,519,783,848,753,1948,1458,258,818,1797,49,0,0,5088,459,36,2036,224,2882,2125,919,5442
 Pqqh_zz,8.98739203,496627,0,0,0,0,30,8,22,56,63,9,25,30,0,0,0,194,25,0,22,6,126,21,40,203

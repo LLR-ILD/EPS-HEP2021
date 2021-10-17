@@ -19,12 +19,14 @@ assert file.suffix == ".csv"
 assert file.stem.startswith("counts_")
 data = pd.read_csv(file, index_col=0)
 data.pop("failed_presel")
+is_higgs_decay = data.pop("is_higgs_decay")
+n_counts = data.pop("n_counts")
+data = data.mul(n_counts, axis=0)
 sample_name = file.stem.replace("counts_", "")
 sample_name = {"e1e1": r"$Z\to e^+e^-$", "e2e2": r"$Z\to \mu^+\mu^-$"}[sample_name]
 
 
 fig, ax = plt.subplots(figsize=(4, 4))
-is_higgs_decay = data.pop("is_higgs_decay")
 higgs_decay_names = data.index[is_higgs_decay]
 
 y = np.arange(len(data.columns))

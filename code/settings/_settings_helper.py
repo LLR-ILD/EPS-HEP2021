@@ -14,6 +14,7 @@ HIGGS_BR = {
     "aa": 0.00242,
     "zz": 0.02616,
     "ww": 0.21756,
+    "inv": 0,
 }
 HIGGS_BR = dict(sorted(HIGGS_BR.items(), key=lambda item: item[1])[::-1])
 assert abs(1.0 - sum(HIGGS_BR.values())) < 1e-5

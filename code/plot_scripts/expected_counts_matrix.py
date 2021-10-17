@@ -23,11 +23,13 @@ is_higgs_decay = data.pop("is_higgs_decay")
 if "bkg" not in save_to:
     data = data[is_higgs_decay]
 failed_presel_counts = data.pop("failed_presel")
-data = data.transpose()
+n_counts = data.pop("n_counts")
 as_probability = "probability" in save_to
 if as_probability:
-    all_process_counts = data.sum() + failed_presel_counts
-    data = 100 * data / all_process_counts
+    data = 100 * data
+else:
+    data = data.mul(n_counts, axis=0)
+data = data.transpose()
 sample_name = file.stem.replace("counts_", "")
 sample_name = {"e1e1": r"$Z\to e^+e^-$", "e2e2": r"$Z\to \mu^+\mu^-$"}[sample_name]
 
@@ -43,7 +45,6 @@ def set_numbers(ax, matrix, omit_zero=True):
                 color = "black"
             else:
                 color = "white"
-
             ax.text(
                 text_x,
                 text_y,
