@@ -54,9 +54,13 @@ def set_numbers(ax, matrix, omit_zero=True):
             )
 
 
-fig, ax = plt.subplots(figsize=(8, 10))
+fig, ax = plt.subplots(figsize=(10, 15))
 ax.imshow(data)
 set_numbers(ax, data)
+
+label_size = 16
+ild_tag_size = label_size + 2
+x_tick_size = label_size - 2
 ax.text(
     1,
     1.005,
@@ -67,29 +71,30 @@ ax.text(
     color="gray",
     weight="bold",
     alpha=1,
-    fontsize=15,
+    fontsize=ild_tag_size,
 )
+
 if as_probability:
     ax.set_title(
-        "Matrix entries P(Class|BR) [%]",
-        fontsize=13,
+        "Matrix entries\nP(Class|BR) [%]",
+        fontsize=label_size,
         loc="left",
     )
 else:
     n_signal = data[data.columns[is_higgs_decay]].sum().sum()
     ax.set_title(
         f"SM event distribution \n{n_signal:.0f} signal events in {sample_name}",
-        fontsize=13,
+        fontsize=label_size,
         loc="left",
     )
 
 x_tick_labels = [fancy_names.get(process, process) for process in data.columns]
 y_tick_labels: typing.List[str] = []  # [br for br in data.index]
 ax.set_xticks(np.arange(len(x_tick_labels)))
-ax.set_xticklabels(x_tick_labels, rotation=90, fontsize=12)
+ax.set_xticklabels(x_tick_labels, rotation=90, fontsize=x_tick_size)
 ax.set_yticks(np.arange(len(y_tick_labels)))
-ax.set_yticklabels(y_tick_labels, fontsize=12)
-ax.set_xlabel("BR", fontsize=14)
-ax.set_ylabel("event class", fontsize=14)
+ax.set_yticklabels(y_tick_labels, fontsize=label_size)
+ax.set_xlabel("BR", fontsize=label_size)
+ax.set_ylabel("event class", fontsize=label_size)
 fig.tight_layout(rect=[0, 0.02, 1, 0.97])
 fig.savefig(save_to, dpi=300, transparent=True)

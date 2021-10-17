@@ -17,6 +17,7 @@ STANDARD_SETTINGS+=code/helper_data.py
 
 PRESEL_STEP_CSVS=$(patsubst $(RAW_DATA_DIR)/presel_e2e2/eLpR/step_%.csv,$(PLOT_DATA)/presel_e2e2_step%.csv,$(wildcard $(RAW_DATA_DIR)/presel_e2e2/eLpR/step_*.csv))
 PLOTS_PRESENTATION:=$(PLOT_DIR)/intro_sample_counts.$(PLOT_FORMAT) $(PLOT_DIR)/intro_signal_composition_per_category.$(PLOT_FORMAT)
+PLOTS_PRESENTATION:=$(PLOT_DIR)/intro_signal_composition_per_category_w_bkg.$(PLOT_FORMAT)
 PLOTS_PRESENTATION+=$(PLOT_DIR)/intro_category_counts.$(PLOT_FORMAT) $(PLOT_DIR)/intro_category_counts_w_bkg.$(PLOT_FORMAT)
 PLOTS_PRESENTATION+=$(PLOT_DIR)/expected_counts_matrix_bkg_e2e2.$(PLOT_FORMAT) $(PLOT_DIR)/probability_matrix.$(PLOT_FORMAT)
 PLOTS_PRESENTATION+=$(PLOT_DIR)/presel_e2e2_eff_0.$(PLOT_FORMAT)
@@ -125,7 +126,7 @@ $(PLOT_DIR)/intro_category_count%.$(PLOT_FORMAT) : code/plot_scripts/intro_categ
 	@mkdir -p $(PLOT_DIR)
 	python3 $(word 1,$^) $@ $(filter-out $<,$^)
 
-$(PLOT_DIR)/intro_signal_composition_per_category.$(PLOT_FORMAT) : code/plot_scripts/intro_category_counts.py $(SETTINGS)/FANCY_NAMES $(PLOT_DATA)/counts_e2e2.csv
+$(PLOT_DIR)/intro_signal_composition_per_category_%.$(PLOT_FORMAT) : code/plot_scripts/intro_category_counts.py $(SETTINGS)/FANCY_NAMES $(PLOT_DATA)/counts_e2e2.csv
 	@mkdir -p $(PLOT_DIR)
 	python3 $(word 1,$^) $@ $(filter-out $<,$^)
 
@@ -214,7 +215,7 @@ tables_% : $(PER_EVENT_DATA_DIR)/z_to_% $(HIGGSTABLES_CONFIG)
 		--data_dir $(TIMESTAMPED_TABLES)/tables_$(shell (basename $<) | rev | cut -d'_' -f 1 | rev)
 	cp -r $(TIMESTAMPED_TABLES)/* $(RAW_DATA_DIR)/
 	# We need to change the folder's timestamp (the content changed, but the file names stayed).
-	touch $(RAW_DATA_DIR)/$@
+	touch $(RAW_DATA_DIR)/$@ & touch $(RAW_DATA_DIR)
 
 presel_% : $(PER_EVENT_DATA_DIR)/z_to_% $(HIGGSTABLES_CONFIG) code/data_presel_make_tables.py
 	mkdir -p $(TIMESTAMPED_TABLES)

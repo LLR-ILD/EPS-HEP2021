@@ -32,14 +32,18 @@ left = np.zeros_like(y)
 for process_name in higgs_decay_names:
     counts = data.loc[process_name]
     if "signal_composition" in save_to:
-        counts = counts / data.loc[is_higgs_decay].sum(axis=0)
+        if "w_bkg" in save_to:
+            divide_by = data.sum(axis=0)
+        else:
+            divide_by = data.loc[is_higgs_decay].sum(axis=0)
+        counts = counts / divide_by
     label = fancy_names.get(process_name, process_name)
     ax.barh(y, counts, left=left, label=label)
     left = left + counts
 
 data_counts = data.sum(axis=0)
 ax.set_xlim((0, 1.05 * max(data_counts)))
-if "w_bkg" in save_to:
+if "w_bkg" in save_to and "signal_composition" not in save_to:
     ax.scatter(
         data_counts,
         np.arange(len(data_counts)),
