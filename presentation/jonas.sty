@@ -27,6 +27,14 @@
 \setbeamertemplate{section in toc}[sections numbered]
 \setbeamerfont{caption}{shape=\normalfont}
 
+\definecolor{ILD_blue}{RGB}{0,66,140}
+\definecolor{LLR_red}{RGB}{238,27,36}
+\colorlet{themeILD_blue-bg}{ILD_blue}
+\colorlet{themeILD_blue-altbg}{green}
+\colorlet{themeILD_blue-fg}{LLR_red}
+
+\renewcommand<>{\emph}[1]{{\usebeamercolor[ILD_blue]{emph}\only#2#1}}
+
   %%%%%%%%%%%%%%%%%%%%
   % TikZ, e.g. for Feynman diagram.
   %%%%%%%%%%%%%%%%%%%%
