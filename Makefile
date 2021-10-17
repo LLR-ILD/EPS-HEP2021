@@ -34,7 +34,7 @@ PLOTS_PRESENTATION+=$(PLOT_DIR)/comparison_signal_scaler_partial.$(PLOT_FORMAT) 
 
 PLOTS_PROCEEDINGS:=$(PLOT_DIR)/presel_e2e2_for_proceedings.$(PLOT_FORMAT)
 
-all : presentation.pdf poster.pdf panic2021.pdf proceedings.pdf
+all : presentation.pdf
 tables-all : tables all
 
 .PHONY: clean
@@ -62,23 +62,6 @@ presentation.pdf : presentation/presentation.tex presentation/beamerx.sty presen
         $(wildcard presentation/backup/*.tex) $(wildcard presentation/*.tex) $(PLOTS_PRESENTATION)
 		echo $?
 	$(call make_pdf,presentation)
-
-proceedings.pdf : proceedings/proceedings.tex proceedings/refs.bib $(PLOTS_PROCEEDINGS) $(PLOTS_PRESENTATION)
-	$(call make_pdf,proceedings)
-
-poster.pdf : poster/poster.tex poster/beamerthemeLLR.sty $(wildcard poster/blocks/*.tex) $(PLOTS_PRESENTATION)
-	$(call make_pdf,poster)
-
-panic2021.pdf : panic2021/panic2021.tex panic2021/beamerthemeLLR.sty $(wildcard panic2021/blocks/*.tex) $(PLOTS_PRESENTATION)
-	$(call make_pdf,panic2021)
-
-panic : panic2021.pdf
-	@# It might be necessary in /etc/ImageMagick-6/policy.xml to comment out
-	@# <!--policy domain="coder" rights="none" pattern="PDF" /-->
-	@mkdir -p dir $(dir $(PANIC_PREFIX))
-	@cp $^ $(PANIC_PREFIX).pdf
-	convert -density 100 $(PANIC_PREFIX).pdf $(PANIC_PREFIX).jpg
-	convert -density 50 $(PANIC_PREFIX).pdf $(PANIC_PREFIX)-small.jpg
 
 # -----------------------------------------------------------------------------
 #
