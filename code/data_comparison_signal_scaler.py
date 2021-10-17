@@ -20,6 +20,8 @@ def data_fit(data_set, HIGGS_BR, HIGGS_BR_DATA, with_bkg_free=True):
         "$ \\times 1.5 $": 1.5,
         "$ \\times 2 $": 2,
         "$ \\times 4 $": 4,
+        "$ \\times 8 $": 8,
+        "$ \\times 16 $": 16,
     }.items():
         data_set.signal_scaler = original_signal_scaler * scaler
         fit = alldecays.Fit(
@@ -31,7 +33,7 @@ def data_fit(data_set, HIGGS_BR, HIGGS_BR_DATA, with_bkg_free=True):
         df[name] = fit.fit_mode.errors
 
     if with_bkg_free:
-        data_set.signal_scaler = original_signal_scaler * scaler
+        data_set.signal_scaler = original_signal_scaler
         for channel in data_set.get_channels().values():
             channel.bkg_cs_default = np.zeros_like(channel.bkg_cs_default)
         fit = alldecays.Fit(
