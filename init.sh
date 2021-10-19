@@ -1,5 +1,6 @@
 #!/bin/bash
-CODE_DIR=$(dirname $(realpath $0))/code
+# $BASH_SOURCE instead of $0 makes this work also when sourcing the file.
+CODE_DIR=$(dirname $(realpath $BASH_SOURCE))/code
 
 activate_environment () {
     VENV=$CODE_DIR/.venv
