@@ -32,8 +32,7 @@ PLOTS_PRESENTATION+=$(PLOT_DIR)/comparison_with_others.$(PLOT_FORMAT)
 PLOTS_PRESENTATION+=$(PLOT_DIR)/comparison_br_scenarios_1.$(PLOT_FORMAT) $(PLOT_DIR)/comparison_br_scenarios_2.$(PLOT_FORMAT)
 PLOTS_PRESENTATION+=$(PLOT_DIR)/comparison_polarizations.$(PLOT_FORMAT)
 PLOTS_PRESENTATION+=$(PLOT_DIR)/comparison_signal_scaler_partial.$(PLOT_FORMAT) $(PLOT_DIR)/comparison_signal_scaler.$(PLOT_FORMAT)
-
-PLOTS_PROCEEDINGS:=$(PLOT_DIR)/presel_e2e2_for_proceedings.$(PLOT_FORMAT)
+PLOTS_PRESENTATION+=$(PLOT_DIR)/presel_e2e2_for_proceedings.$(PLOT_FORMAT)
 
 all : presentation.pdf
 tables-all : tables all
