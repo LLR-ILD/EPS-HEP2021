@@ -1,0 +1,72 @@
+% Declare that this document class file requires at least LaTeX version 2e.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{presentation/jonas}[2020/12/07 v0.1.0, Some standard definitions used in many of my scientifc writings.]
+
+
+\usepackage{ifluatex,ifxetex}
+  \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  \fi
+\usepackage{booktabs} % For more table thickness options than just \hline.
+%\usepackage{layouts} % For \prntlen{}. Only use for intermediate steps.
+                      % Results in warning (\stockheight not defined).
+
+
+  %%%%%%%%%%%%%%%%%%%%
+  % Beamer specific.
+  %%%%%%%%%%%%%%%%%%%%
+  \usepackage{ulem} % For strike out (\sout{}).
+  \renewcommand<>{\sout}[1]{
+    \alt#2{\beameroriginal{\sout}{#1}}{#1}}
+  \usepackage{framed} % For a box that is not transparent but actually covers
+                      % the picture in \picframe: \begin{shaded}.
+      \definecolor{shadecolor}{rgb}{1,1,1}
+\setbeamertemplate{itemize item}[circle] % In a report, this would be achieved
+                                         % with \renewcommand{\labelitemi}{$\circ$}
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamerfont{caption}{shape=\normalfont}
+
+\definecolor{ILD_blue}{RGB}{0,66,140}
+\definecolor{LLR_red}{RGB}{238,27,36}
+\colorlet{themeILD_blue-bg}{ILD_blue}
+\colorlet{themeILD_blue-altbg}{green}
+\colorlet{themeILD_blue-fg}{LLR_red}
+
+\renewcommand<>{\emph}[1]{{\usebeamercolor[ILD_blue]{emph}\only#2#1}}
+
+  %%%%%%%%%%%%%%%%%%%%
+  % TikZ, e.g. for Feynman diagram.
+  %%%%%%%%%%%%%%%%%%%%
+\usepackage{tikz} % For overlaying images.
+  \usetikzlibrary{shapes.misc} % For crossing out.
+  \usetikzlibrary{trees} % Feynman diagrams.
+  \usetikzlibrary{decorations.pathmorphing} % Feynman diagrams.
+  \usetikzlibrary{decorations.markings} % Feynman diagrams.
+  \usetikzlibrary{calc} % Here for relative node positioning (labels).
+  \usetikzlibrary{positioning}
+
+
+  %%%%%%%%%%%%%%%%%%%%
+  % Custom commands.
+  %%%%%%%%%%%%%%%%%%%%
+\newcommand{\tn}[1]{\textnormal{#1}}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+  \newcommand{\cmark}{\ding{51}}
+  \newcommand{\xmark}{\ding{55}}
+% Proper eV spacing.
+  \newcommand{\eV}{\text{e\kern-0.15ex V}\xspace}
+  \newcommand{\MeV}{\text{M\eV}\xspace}
+  \newcommand{\GeV}{\text{G\eV}\xspace}
+  \newcommand{\TeV}{\text{T\kern-0.1ex \eV}\xspace}
+
+\newcommand{\cosTheta}[1]{\mathrm{cos}\theta_{\mathrm{#1}}}
+%   %%%%%%%%%%%%%%%%%%%%
+%   % Miscellaneous.
+%   %%%%%%%%%%%%%%%%%%%%
+% % Bold math symbols in captions.
+% \makeatletter
+% \g@addto@macro\bfseries{\boldmath}
+% \makeatother
+
+% \endinput

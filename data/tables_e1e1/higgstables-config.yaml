@@ -1,0 +1,125 @@
+# Default config file for higgstables
+#
+# Note that categories definitions are tried until the first one applies.
+# Therefore the order matters.
+# If a value in higgstables.categories is a list, the items/expressions
+# are combined per logical_and.
+#
+higgstables:
+  tables:
+    eLpL: "eLpL/*/simple_event_vector.root"
+    eLpR: "eLpR/*/simple_event_vector.root"
+    eRpL: "eRpL/*/simple_event_vector.root"
+    eRpR: "eRpR/*/simple_event_vector.root"
+  ignored-processes: [Pe2e2h, Pe1e1h]  # Avoid duplication with the pre-decay files.
+  machine: "E250-SetA"  # For cross section column.
+  anchors:
+    # Collect here (or anywhere else) anchors (&var) for future aliasing (*var).
+    &no_iso "(n_iso_leptons == 0) & (n_iso_photons == 0)"
+  triggers:  # Events that did not make it to the categories tree.
+    - tree: preselection_passed_
+      type: histogram
+      condition: [0]  # For histogram: which bins to keep.
+  preselections:  # Events in the categories-tree that should not be used.
+    - tree: z_variables
+      # out-of-tree-variables: {n_charged_hadrons: simple_event_vector}
+      condition:  # Same syntax as for categories.
+      - "(m_z > 86.19) & (m_z < 96.19)"
+      - "(m_recoil > 123) & (m_recoil < 130)"
+      - abs(cos_theta_z) < 0.9
+      - abs(cos_theta_miss) < 0.9
+      - abs(cos_theta_z - cos_theta_miss) < 0.50
+      # - abs(cos_theta_z + cos_theta_miss) < 1.20
+  categories-tree: simple_event_vector
+  categories:
+    e2e2_tight_2:
+    - e2e2_mass > 123
+    - e2e2_mass < 126
+    - e2e2_recoil > 80
+    - e2e2_recoil < 120
+    e2e2_tight_1:
+    - e2e2_mass > 120
+    - e2e2_mass < 127
+    e2e2_loose:
+    - e2e2_mass > 0
+    inv_tight:
+    - *no_iso
+    - sp_charged_hadron_1_e < 2
+    - sp_charged_hadron_1_e < 1
+    - sp_charged_lepton_1_e < 2
+    aZ_tight_against_Z:
+    - aZ_a_energy > 20
+    - aZ_a_energy < 50
+    - aZ_other_mass > 75
+    - aZ_other_mass < 110
+    - abs(aZ_a_cos_theta) < 0.9
+    aZ_tight_against_nothing:
+    - aZ_a_energy > 20
+    - aZ_a_energy < 50
+    - aZ_other_mass < 15
+    - abs(aZ_a_cos_theta) < 0.9
+    aZ_tight_between:
+    - aZ_a_energy > 20
+    - aZ_a_energy < 50
+    - aZ_other_mass < 75
+    - abs(aZ_a_cos_theta) < 0.9
+    bb_tight:
+    - *no_iso
+    - b_tag1 > 0.9
+    - b_tag2 > 0.9
+    bb:
+    - *no_iso
+    - b_tag2 > 0.8
+    cc_tight:
+    - *no_iso
+    - n_pfos > 20
+    - m_h > 100
+    - c_tag1 > 0.7
+    - c_tag2 > 0.7
+    isolep1: n_iso_leptons == 1
+    isolep2: n_iso_leptons == 2
+    isolep_many: n_iso_leptons > 2
+    aa_tight:
+    - n_iso_photons == 2
+    - aZ_other_mass < 75
+    - e_h > 125
+    - n_pfos < 15
+    - n_charged_hadrons < 10
+    - n_iso_leptons == 0
+    - abs(aZ_a_cos_theta) < 0.9
+    - aZ_a_energy > 35
+    aa:
+    - n_iso_photons > 0
+    - aZ_other_mass < 75
+    - e_h > 125
+    - n_pfos < 15
+    - n_charged_hadrons < 10
+    - n_iso_leptons == 0
+    - abs(aZ_a_cos_theta) < 0.9
+    - aZ_a_energy > 35
+    isophoton1: n_iso_photons == 1
+    isophoton_many: n_iso_photons > 1
+    tau:
+    - n_pfos < 15
+    - n_iso_leptons == 0
+    - sp_charged_hadron_1_e > 15
+    light_quark_few_hadrons:
+    - *no_iso
+    - b_tag1 + c_tag1 < 0.5
+    - n_charged_hadrons < 20
+    light_quark_many_hadrons:
+    - *no_iso
+    - b_tag1 + c_tag1 < 0.5
+    - n_charged_hadrons > 40
+    light_quark_intermediate_hadrons:
+    - *no_iso
+    - b_tag1 + c_tag1 < 0.5
+    few_hadrons:
+    - *no_iso
+    - n_charged_hadrons < 20
+    many_hadrons:
+    - *no_iso
+    - n_charged_hadrons > 40
+    # intermediate_hadrons:
+    # - *no_iso
+    rest: n_iso_leptons >= 0  # Cannot have empty expression -> Always true.

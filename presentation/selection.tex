@@ -1,0 +1,21 @@
+\begin{frame}{Event selection}
+    \begin{columns}[c, onlytextwidth]
+    \foreach \x in {1, ..., 5}{\only<\x>{
+    \begin{column}{0.4\textwidth}
+        \small Selection only on information from decay of the primary Z boson.
+    \includegraphics[height=0.9\textheight, width=0.95\textwidth, keepaspectratio]
+        {presel_e2e2_eff_\x}
+        {\footnotesize Step 0: Find a lepton pair.}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \vspace{-0.1\textheight}
+        \begin{center}
+        \includegraphics[height=\textheight, width=\textwidth, keepaspectratio]
+        {presel_e2e2_\x}
+        \end{center}
+    \end{column}
+    \begin{column}{0.1\textwidth}
+    \end{column}
+    }}
+    \end{columns}
+    \end{frame}

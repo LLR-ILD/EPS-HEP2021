@@ -1,0 +1,73 @@
+% Define styles for the different kind of edges in a Feynman diagram
+\tikzset{
+    vector/.style={decorate, draw,
+    decoration={snake, segment length=4mm, amplitude=1mm}},
+    fermion/.style={draw, postaction={decorate},
+        decoration={markings,mark=at position .55 with {\arrow[draw]{>}}}},
+    fermionbar/.style={draw, postaction={decorate},
+        decoration={markings,mark=at position .55 with {\arrow[draw]{<}}}},
+    gluon/.style={decorate, draw,
+        decoration={coil,amplitude=4pt, segment length=5pt}},
+    higgs/.style={dashed,draw},
+    photon/.style={decorate, decoration={snake}, draw},
+    electron/.style={draw, postaction={decorate},
+        decoration={markings,mark=at position .55 with {\arrow[draw]{>}}}},
+    positron/.style={draw, postaction={decorate},
+        decoration={markings,mark=at position .55 with {\arrow[draw]{<}}}}
+}
+
+\providecommand{\HiggsColor}{black}
+\providecommand{\PrimaryZColor}{black}
+\begin{tikzpicture}[line width=1.5pt, scale=1]
+    \node (i1 e+) at (-140:2) {};
+    \node (v4 ISR) at (-140:1.5) {};
+    \begin{scope}[shift={(v4 ISR)}]
+        \node (f4 gamma) at (10:1.5) {};
+    \end{scope}
+    \node (i2 e-) at (140:2) {};
+
+    \node (v1 eeZ) at (0,0) {};
+    \node (v2 ZZH) at (0:2) {};
+    \begin{scope}[shift={(v2 ZZH)}]
+        \node (v3 Zll) at (-40:1.5) {};
+        \node (f1 H) at (40:1.6) {};
+    \end{scope}
+    \begin{scope}[shift={(v3 Zll)}]
+        \node (f3 l-) at (-60:2) {};
+        \node (f2 l+) at (-20:2) {};
+        \node (v5 FSR) at (-20:0.5) {};
+    \end{scope}
+    \begin{scope}[shift={(v5 FSR)}]
+        \node (f5 gamma) at (0:1.5) {};
+    \end{scope}
+    \begin{scope}[shift={(f3 l-)}]
+        \node (f6 nu tau) at (-10:1.5) {};
+        \node (f7 W) at (10:1.5) {};
+    \end{scope}
+
+
+    \draw[fermionbar] (i1 e+)--(v1 eeZ.center);
+        \node at (i1 e+) {$e^+$};
+    \draw[fermion] (i2 e-)--(v1 eeZ.center);
+        \node at (i2 e-) {$e^-$};
+    \draw[vector] (v1 eeZ.center)--(v2 ZZH.center);
+        \node at ($ 0.5*(v1 eeZ) + 0.5*(v2 ZZH)  + (0,0.3) $) {$Z$};
+    {\color{\HiggsColor}
+    \draw[higgs] (v2 ZZH.center)--(f1 H);
+        \node at (f1 H) {$H$};
+    }{\color{\PrimaryZColor}
+    \draw[vector] (v2 ZZH.center)--(v3 Zll.center);
+        \node at ($ 0.5*(v2 ZZH) + 0.5*(v3 Zll)  + (0.2,0.2) $) {$Z$}; % = midpoint of propagator + fine tuning
+
+    % \draw[vector] (v4 ISR.center)--(f4 gamma);
+    % \node at (f4 gamma) {$\gamma$};
+
+    \draw[fermion] (v3 Zll.center)--(f3 l-);
+    \draw[fermionbar] (v3 Zll.center)--(f2 l+);
+    \node at (f3 l-) {$l^-$};
+    \node at (f2 l+) {$l^+$};
+    \draw[vector] (v5 FSR.center)--(f5 gamma);
+    \node at (f5 gamma) {$\gamma$};
+    }
+
+\end{tikzpicture}
