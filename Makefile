@@ -14,7 +14,7 @@ PY_FILES=$(BUILD_DIR)/files_py.txt
 IMG_FILES=$(BUILD_DIR)/files_img.txt
 
 
-all : images presentation.pdf poster.pdf panic2021.pdf proceedings.pdf
+all : images presentation.pdf poster.pdf panic2021.pdf proceedings.pdf panic_proceedings.pdf
 tables-all : tables all
 
 # $(call make_pdf, tex_folder)
@@ -83,6 +83,11 @@ $(BUILD_DIR)/files_latex_panic2021.txt : $(shell find panic2021)
 	find poster -type f | sort > $@
 
 $(BUILD_DIR)/files_latex_proceedings.txt : $(shell find proceedings)
+	mkdir -p $(BUILD_DIR)
+	find proceedings -type f | sort > $@
+
+
+$(BUILD_DIR)/files_latex_panic_proceedings.txt : $(shell find proceedings)
 	mkdir -p $(BUILD_DIR)
 	find proceedings -type f | sort > $@
 
