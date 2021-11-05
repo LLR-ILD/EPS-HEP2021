@@ -72,40 +72,11 @@ The background rates are low compared to hadron colliders.
 
 One of the improvements compared to
 a previously presented version of the study~\cite{LCWS_combined_Higgs}
-is the inclusion of background processes in the result.
-
-\section{Implementation}\label{sec:Implementation}
-The samples used in this study were created by the ILD concept group since 2020.
-More than 400.000 events were simulated for each of the nine main Standard Model (SM)
-Higgs decay processes.
-As background, we consider SM processes
-with two or four fermions in the final state.
-All events are weighted according to their SM cross sections
-and to 2000~fb$^{-1}$ of integrated luminosity.
-While this is the integrated luminosity from the 20-year running scenario,
-the time would realistically be shared
-between left-polarized
-(80\% left-polarized electron beam, 30\% right-polarized positron beam)
-and right-polarized (80\% right $e^-$, 30\% left $e^+$) runs.
-Since this analysis is comparatively insensitive to beam polarization,
-we simplify the analysis by considering only the left-polarized run.
-
-The events are simulated for the ILC250 using the SetA beam parameters~\cite{ILC_Staging_2017}.
-Leading order event generation is performed by WHIZARD 2.8.5~\cite{whizard,omega}.
-Initial State Radiation, Beamstrahlung and Final State Radiation (FSR) are included.
-The fragmentation and hadronization of final-state quarks and gluons
-is performed with PYTHIA 6.422~\cite{pythia}.
-The ILD detector geometry is described with DD4hep~\cite{DD4hep}
-and simulated in GEANT4~\cite{GEANT4}.
-Event reconstruction is performed with ILCSoft v02\Hyphdash*02, %~\cite{ILCSoft},
-which includes PandoraPFA~\cite{PandoraPFA} for
-the reconstruction of particle flow objects
-and LCFIPlus~\cite{LCFIPlus} for flavor tagging.
-
+is the inclusion of the Standard Model (SM) background processes in the result.
 
 \section{Event selection}\label{sec:selection}
 
-We focus on Higgsstrahlung events in which the primary Z boson decays leptonically,
+We target Higgsstrahlung events in which the primary Z boson decays leptonically,
 $Z \to e^+ e^-$ or $Z \to \mu^+ \mu^-$.
 Event variables can be reconstructed after the isolated lepton pair is identified
 and combined with FSR photon candidates.
@@ -182,8 +153,7 @@ be determined using simulated events\footnote{
     for the detector data.
     To prevent overfitting, we split the data set
     into two equal but statistically independent parts.
-}
-obtained by following the procedure outlined in Section~\ref{sec:Implementation}.
+}.
 They are combined into a matrix, where each column corresponds to one process.
 Applying the truth vector of the process counts to this matrix yields the class counts.
 Conversely, given the class counts, a fit can be performed to gain access to the
@@ -219,6 +189,9 @@ They can be converted into mean values and uncertainties for each of the BRs.
     }\label{fig:toys}
 \end{figure}
 
+In the following we assume a dataset collected at the left-polarized
+(80\% left-polarized electron beam, 30\% right-polarized positron beam)
+ILC250 with 2000~fb$^{-1}$ of integrated luminosity.
 Figure~\ref{fig:brs} gives the resulting values for a combination of the
 $Z \to e^+e^-$ and $Z \to \mu^+\mu^-$ primary Z boson channels.
 The left part of the figure shows the result in the SM case.
