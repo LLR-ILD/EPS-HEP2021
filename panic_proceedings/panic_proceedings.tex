@@ -124,7 +124,7 @@ relatively well between the considered Higgs decay modes.
 The last bin contains all events that do not match any class definition.
 The relative sensitivity to a Higgs decay mode varies between bins.
 Next, we will present a fit that uses this variation in sensitivity
-to derive the Higgs branching ratios.
+to derive the Higgs branching ratios (BRs).
 
 
 \section{Branching ratio uncertainties}\label{sec:fit}
@@ -132,7 +132,7 @@ to derive the Higgs branching ratios.
 \subsection{Setting up the fit}
 
 \begin{figure}[ht]
-    \begin{minipage}{0.67\textwidth}
+    \begin{minipage}{0.64\textwidth}
     \includegraphics[width=0.49\textwidth, keepaspectratio]{br_estimates}
     \includegraphics[width=0.49\textwidth, keepaspectratio]{changed_br_estimates}
     \end{minipage}
@@ -165,12 +165,7 @@ to derive the Higgs branching ratios.
 \end{figure}
 
 The class probabilities for each Higgs decay mode or background process can
-be determined using simulated events\footnote{
-    The simulated events are needed both here and later on as a placeholder
-    for the detector data.
-    To prevent overfitting, we split the data set
-    into two equal but statistically independent parts.
-}.
+be determined using simulated events.
 They are combined into a matrix, where each column corresponds to one process.
 Applying the truth vector of the process counts to this matrix yields the class counts.
 Conversely, given the class counts, a fit can be performed to gain access to the
@@ -190,8 +185,8 @@ In the following we assume a dataset collected at the left-polarized
 ILC250 with 2000~fb$^{-1}$ of integrated luminosity.
 Figure~\ref{fig:brs} gives the resulting values for a combination of the
 $Z \to e^+e^-$ and $Z \to \mu^+\mu^-$ primary Z boson channels.
-The left part of the figure shows the result in the SM case.
-The right part of the figure supports the claim that the method
+The left panel of the figure shows the result in the SM case.
+The central panel supports the claim that the method
 is truly model independent.
 Here we assume a model with $BR(H \to b \bar{b})$ decreased by $15\%$,
 and $BR(H \to W^+W^-)$ increased by $15\%$.
