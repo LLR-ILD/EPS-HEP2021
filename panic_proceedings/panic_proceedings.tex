@@ -1,6 +1,7 @@
 \documentclass[a4paper,11pt]{article}
 \usepackage{pos}
 \usepackage{booktabs}  % For \toptrule etc.
+\usepackage{wrapfig}
 \usepackage{xspace}
 \usepackage[shortcuts]{extdash}  % For \Hyphdash* - Dash that disallows line break.
 \newcommand{\eV}{\text{e\kern-0.15ex V}\xspace}
@@ -76,6 +77,15 @@ is the inclusion of the Standard Model (SM) background processes in the result.
 
 \section{Event selection}\label{sec:selection}
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9\textwidth, keepaspectratio]{presel_e2e2_for_proceedings}
+    \caption{
+        Cut flow for the event selection in the $Z \to \mu^+ \mu^-$ sample.
+        The last figure shows the efficiency and purity after each step.
+    }\label{fig:presel}
+\end{figure}
+
 We target Higgsstrahlung events in which the primary Z boson decays leptonically,
 $Z \to e^+ e^-$ or $Z \to \mu^+ \mu^-$.
 Event variables can be reconstructed after the isolated lepton pair is identified
@@ -93,18 +103,21 @@ with about 50\% purity at 50\% signal efficiency.
 By definition, the efficiency is constant over Higgs decay modes
 and the resulting sample is thus unbiased.
 
-\begin{figure}[ht]
+\setlength\intextsep{0pt}
+\begin{wrapfigure}{r}{0pt}
     \centering
-    \includegraphics[width=0.9\textwidth, keepaspectratio]{presel_e2e2_for_proceedings}
+    \includegraphics[width=0.43\textwidth]{intro_category_counts_w_bkg}
     \caption{
-        Cut flow for the event selection in the $Z \to \mu^+ \mu^-$ sample.
-        The last figure shows the efficiency and purity after each step.
-    }\label{fig:presel}
-\end{figure}
+        Expected contributions per class from each of the Higgs decay modes.
+    }\label{fig:box_counts}
+\end{wrapfigure}
 
 We will now build a binned distribution of expected counts from the sample,
 as shown in Figure~\ref{fig:box_counts}.
 Each bin contains the events that fall into a specific class.
+For the shown bin counts, Standard Model branching ratios are assumed..
+The black dots additionally contain the background contribution
+to the $Z \to \mu^+\mu^-$ Higgsstrahlung sample after event selection.
 The class definitions can be found in the appendix of~\cite{LCWS_combined_Higgs}.
 They were chosen so that they distinguish
 relatively well between the considered Higgs decay modes.
@@ -113,17 +126,6 @@ The relative sensitivity to a Higgs decay mode varies between bins.
 Next, we will present a fit that uses this variation in sensitivity
 to derive the Higgs branching ratios.
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.43\textwidth, keepaspectratio]{intro_category_counts_w_bkg}
-    \caption{
-        Expected contributions per class from each of the Higgs decay modes
-        assuming the Standard Model branching ratios.
-        The black dots additionally contain the background contribution
-        to the $Z \to \mu^+\mu^-$ Higgsstrahlung sample after event selection.
-        The class definitions are described in the appendix of \cite{LCWS_combined_Higgs}.
-    }\label{fig:box_counts}
-\end{figure}
 
 \section{Branching ratio uncertainties}\label{sec:fit}
 
