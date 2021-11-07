@@ -1,0 +1,158 @@
+% Based on ETH-style beamerthemZH.sty in examples 03 of
+% https://github.com/deselaers/latex-beamerposter
+\ProvidesPackage{beamerthemeLLR}
+\RequirePackage{calc}
+\RequirePackage{graphicx}
+\RequirePackage{ragged2e}
+
+% Some general beamer customizations:
+    \setbeamertemplate{bibliography item}[text]
+    \setbeamertemplate{caption}[numbered]{} % Number float-like environments.
+    % Beamer math
+    \usefonttheme[onlymath]{serif}
+    % \boldmath
+
+% Colors
+    \definecolor{ILD-blue}{RGB}{0,66,140}
+    \definecolor{LLR-red}{RGB}{238,27,36}
+    \definecolor{IPP-blue}{RGB}{0,65,107} % Currently not in use: white IPP logo with transparent bkg instead.
+    \definecolor{ETH-green}{RGB}{130,190,30} % Works well with current colors. Maybe for box headers?
+    \definecolor{light-gray}{RGB}{230,230,230}
+    % It seems many of the following entries do not control any visible behaviour.
+    % Set them to an extreme color so that they are easy to spot
+    % if they ever become visible.
+    \colorlet{UNDEFINED}{magenta}
+
+    \colorlet{C1}{ILD-blue} % Header/footer background.
+    \colorlet{C2}{white} % Header/footer text color.
+    \colorlet{C3}{LLR-red} % Accent color.
+    \colorlet{C4}{black} % Standard text color.
+    \colorlet{C5}{white} % Block body background.
+    \colorlet{C7}{light-gray} % Main panel background.
+
+    \setbeamercolor{headline}{fg=UNDEFINED,bg=C1}
+    \setbeamercolor{footline}{fg=UNDEFINED, bg=UNDEFINED}
+    \setbeamercolor{separation line}{bg=C1}
+    \setbeamercolor{title in headline}{fg=C2}
+    \setbeamercolor{author in headline}{fg=C2}
+    \setbeamercolor{institute in headline}{fg=C2}
+
+    \setbeamercolor{framesubtitle}{fg=UNDEFINED, bg=UNDEFINED}
+    \setbeamercolor{author in head/foot}{fg=C2, bg=C1}
+    \setbeamercolor{title in head/foot}{fg=UNDEFINED, bg=UNDEFINED}
+
+    \setbeamercolor*{normal text}{fg=C4, bg=C7}
+    \setbeamercolor*{block body}{fg=C4, bg=C5}
+    \setbeamercolor*{block title}{fg=C4,bg=C3}
+    \setbeamercolor{upper separation line head}{fg=UNDEFINED}
+
+    \setbeamercolor*{example body}{fg=UNDEFINED,bg=UNDEFINED}
+    \setbeamercolor*{example text}{fg=UNDEFINED,bg=UNDEFINED}
+    \setbeamercolor*{example title}{bg=UNDEFINED,fg=UNDEFINED}
+
+    \setbeamercolor{alerted text}{fg=UNDEFINED}
+    \setbeamercolor{structure}{fg=C1}  % E.g. Figure caption prefix.
+
+    \setbeamertemplate{itemize items}{\color{C3}$\blacktriangleright$}
+    \setbeamertemplate{navigation symbols}{}  % no navigation on a poster.
+
+% Blocks
+\newlength{\myblockbodywidth}
+\newlength{\myblockwidthdelta}
+\newlength{\myblocktitlespacing}
+\newlength{\myblockoverlap}
+\setbeamertemplate{block begin}{
+    % ! This environment cannot both have nice margins AND
+    % display the contained text as justified.
+    % We preferentially use the above but keep this one just-in-case.
+    \vskip2ex
+    \setlength{\myblocktitlespacing}{1ex}
+    \setlength{\myblockwidthdelta}{0.75ex}
+    \setlength{\myblockbodywidth}{\textwidth-2\myblockwidthdelta}
+    \setlength{\myblockoverlap}{1ex}
+    \begin{beamercolorbox}
+        [dp=\myblockoverlap,wd=\textwidth,center,colsep*=\myblocktitlespacing,rounded=true]
+        {block title}
+        \bf\centering\Huge
+        \insertblocktitle
+    \end{beamercolorbox}\vskip-\myblockoverlap
+    % End of block title, now block body:
+    {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5ex}}
+    \usebeamerfont{block body}
+    \hskip\myblockwidthdelta
+    \begin{beamercolorbox}
+        [center,wd=\myblockbodywidth,leftskip=1cm]
+        {block body}
+        \ifbeamercolorempty[bg]{block body}\vbox{}
+        \begin{minipage}{0.96\myblockbodywidth}\vbox{}\justify
+}
+\setbeamertemplate{block end}{
+        \end{minipage}
+    \end{beamercolorbox}
+}
+
+% Vertically centered version of includegraphics.
+\newcommand{\vcenteredincludegraphics}[2][]{
+    \begingroup
+        \setbox0=\hbox{\includegraphics
+            [#1]{#2}}
+        \parbox{\wd0}{\box0}
+    \endgroup
+}
+
+% Header
+\newlength{\headerheight}\setlength{\headerheight}{0.125\textheight}
+\newlength{\columnheight}\setlength{\columnheight}{0.875\textheight}
+\setbeamertemplate{headline}{
+    \leavevmode
+    \begin{beamercolorbox}[wd=\paperwidth]{headline}
+        \vspace{2ex}\\
+        \begin{columns}[c]
+            \begin{column}{.01\paperwidth}
+            \end{column}
+            \begin{column}{.19\paperwidth}
+                \includegraphics[height=.55\headerheight]{logo_xipp_white_longue} \\
+                \includegraphics[height=.45\headerheight]{logo_llr}
+            \end{column}
+            \begin{column}{.6\paperwidth}
+                \raggedleft
+                \usebeamercolor{title in headline}{\color{fg}\textbf{\veryHuge{\inserttitle}}\\[1ex]}
+                \usebeamercolor{author in headline}{\color{fg}\LARGE{\insertauthor}\\[1ex]}
+                \usebeamercolor{institute in headline}{\color{fg}\Large{\insertinstitute}\\[1ex]}
+            \end{column}
+            \begin{column}{.19\paperwidth}
+                \includegraphics[width=\textwidth, height=\headerheight, keepaspectratio]{logo_ILD_whiteonblue}
+            \end{column}
+            \begin{column}{.01\paperwidth}
+            \end{column}
+        \end{columns}
+        \vspace{2ex}\\
+    \end{beamercolorbox}
+
+    \begin{beamercolorbox}[wd=\paperwidth]{lower separation line head}
+        \rule{0pt}{2pt}
+    \end{beamercolorbox}
+}
+
+% Footer
+\setbeamerfont{footline}{size=\VeryHuge,series=\bf}
+\setbeamertemplate{footline}{
+    \begin{beamercolorbox}[wd=\paperwidth]{upper separation line foot}
+        \rule{0pt}{2pt}
+    \end{beamercolorbox}
+
+    \leavevmode
+    \begin{beamercolorbox}[ht=4ex,leftskip=1cm,rightskip=1cm]{author in head/foot}
+        \href{http://www.ilcild.org}{www.ilcild.org}
+        \hfill
+        \@date
+        \hfill
+        \href{mailto:kunath@llr.in2p3.fr}{kunath@llr.in2p3.fr}
+        \vskip1ex
+    \end{beamercolorbox}
+
+    \vskip0pt
+    \begin{beamercolorbox}[wd=\paperwidth]{lower separation line foot}
+        \rule{0pt}{2pt}
+    \end{beamercolorbox}
+}

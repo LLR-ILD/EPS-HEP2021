@@ -1,0 +1,3 @@
+git+https://github.com/LLR-ILD/alldecays.git@08e51e9
+git+https://github.com/LLR-ILD/higgstables.git@ab95f1e
+pre-commit
