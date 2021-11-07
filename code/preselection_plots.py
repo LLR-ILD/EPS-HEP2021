@@ -147,8 +147,8 @@ def plot_efficiency(presel_tables: WeightedPreselectionTables):
 def get_latex(string):
     """Quick fix for nicer figure texts."""
     for normal, latex in {
-        "m_z": "$M_Z$",
-        "m_recoil": r"$M_{\mathrm{recoil}}$",
+        "m_z": "$M_Z$ [GeV]",
+        "m_recoil": r"$M_{\mathrm{recoil}}$ [GeV]",
         "abs(cos_theta_z)": "$| \\mathrm{cos} \\theta_Z |$",
         "abs(cos_theta_miss)": "$| \\mathrm{cos} \\theta_{\\mathrm{miss}} |$",
         "abs(cos_theta_z - cos_theta_miss)": "$| \\mathrm{cos} \\theta_Z - \\mathrm{cos} \\theta_{\\mathrm{miss}} |$",
