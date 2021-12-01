@@ -4,6 +4,7 @@
     \begin{columns}[c,onlytextwidth]
     \begin{column}{0.55\textwidth}
     \vfill
+    {\color{white}\only<3>{\color{black}}\textit{1\% Higgs invisible}}
     \begin{enumerate}
         \item Build samples with all Higgs decay modes
             (Higgsstrahlung, $Z\to (e^+e^-, \mu^+\mu^-)$).
@@ -20,11 +21,15 @@
         {intro_signal_composition_per_category}}}
     \only<3>{\addtocounter{framenumber}{1} \put(0, 0){
         \includegraphics[height=0.75\textheight, width=0.95\textwidth, keepaspectratio]
-        {intro_category_counts}}}
+        {intro_signal_composition_per_category_inv1}}
+    }
     \only<4>{\addtocounter{framenumber}{1} \put(0, 0){
         \includegraphics[height=0.75\textheight, width=0.95\textwidth, keepaspectratio]
+        {intro_category_counts}}}
+    \only<5>{\addtocounter{framenumber}{1} \put(0, 0){
+        \includegraphics[height=0.75\textheight, width=0.95\textwidth, keepaspectratio]
         {intro_category_counts_w_bkg}}}
-    \only<5>{\addtocounter{framenumber}{1} \put(0, 0){\centering
+    \only<6>{\addtocounter{framenumber}{1} \put(0, 0){\centering
         \includegraphics[height=0.9\textheight, keepaspectratio]
         {br_estimates_default}}}
     % \only<5>{\addtocounter{framenumber}{1}

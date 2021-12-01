@@ -21,6 +21,14 @@ data = pd.read_csv(file, index_col=0)
 data.pop("failed_presel")
 is_higgs_decay = data.pop("is_higgs_decay")
 n_counts = data.pop("n_counts")
+if "_inv" in save_to:
+    for inv_part in save_to[: save_to.rfind(".")].split("_"):
+        if not inv_part.startswith("inv"):
+            continue
+        invisible_percent = float(inv_part[len("inv") :])
+        n_higgs_counts = n_counts.loc[is_higgs_decay].drop("inv").sum()
+        n_counts_inv = n_higgs_counts * invisible_percent / 100
+        n_counts.loc["inv"] = n_counts_inv
 data = data.mul(n_counts, axis=0)
 sample_name = file.stem.replace("counts_", "")
 sample_name = {"e1e1": r"$Z\to e^+e^-$", "e2e2": r"$Z\to \mu^+\mu^-$"}[sample_name]

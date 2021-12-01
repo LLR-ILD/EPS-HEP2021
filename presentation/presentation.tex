@@ -19,40 +19,44 @@
     \fill[ILD_blue] (current page.north east) rectangle (current page.south west);
     \end{tikzpicture}}
 
-\title[Higgs 2021]{
-    A combined fit to the Higgs Branching Ratios at ILD
+\title[3rd FCC-France / Higgs \& ElectroWeak Factory Workshop, Annecy]{
+    A combined fit to\\
+    the Higgs Branching Ratios\\
+    at 250~GeV
 }[Combined Higgs fit]
-\author[Jonas Kunath]{Jonas Kunath (LLR), on behalf of the ILD concept group}
-\date{20.10.2021}
+\author[Jonas Kunath]{Jonas Kunath, Laboratoire Leprince-Ringuet}
+\date{02.12.2021}
 
 \begin{document}
 \maketitle
-\xsection{ILD_blue}{Recap}
-    \InputSlide{recap.tex}
-\xsection{ILD_blue}{Intro\-duction}
-    \InputSlide{ilc.tex}
-    \InputSlide{ild.tex}
-    \InputSlide{higgsstrahlung.tex}
 \xsection{ILD_blue}{Event selection}
+    \InputSlide{recap.tex}
     \InputSlide{selection.tex}
+    \InputSlide{analysis_goal.tex}
 \xsection{ILD_blue}{Idea}
+    \InputSlide{recap.tex}
     \InputSlide{idea_Higgs_all_in_one.tex}
 \xsection{ILD_blue}{Implemen\-tation}
     \InputSlide{implementation.tex}
 \xsection{ILD_blue}{Fit}
+    \InputSlide{recap.tex}
     \InputSlide{fit_setup.tex}
     \InputSlide{fit_results.tex}
-    \InputSlide{fit_check_toys.tex}
     \InputSlide{fit_change_bb_ww.tex}
     \InputSlide{fit_dependency.tex}
 \xsection{ILD_blue}{Conclusion}
     \InputSlide{conclusion.tex}
 
 \newcounter{finalframe}\setcounter{finalframe}{\value{framenumber}}
-\xsection{ILD_blue}{Back-up}[pr_ilc_cavity_resized]
+\xsection{LLR_red}{Back-up}[pr_ilc_cavity_resized]
+    \InputSlide{fit_check_toys.tex}
+    \InputSlide{fit_change_bb_ww_toys.tex}
     \InputSlide{backup/expected_counts_e2e2.tex}
     \InputSlide{backup/correlations.tex}
+    \InputSlide{ilc.tex}
+    \InputSlide{ild.tex}
     \InputSlide{backup/comparison_to_global_fit.tex}
+    \InputSlide{higgsstrahlung.tex}
     \InputSlide{backup/higgstrahlung_per_z_decay.tex}
     % \InputSlide{higgsstrahlung_event_display.tex}
 \setcounter{framenumber}{\value{finalframe}}

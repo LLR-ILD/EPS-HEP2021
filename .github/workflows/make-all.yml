@@ -6,6 +6,7 @@ on:
     branches:
       - master
       - eps
+      - fcc_france_workshop
 
 jobs:
   make-all:

@@ -19,8 +19,11 @@ for file in map(Path, sys.argv[3:]):
     assert file.stem.startswith("fit_")
 
     sample_data = pd.read_csv(file, index_col=0)
-    data[file.stem.replace("fit_", "")] = sample_data["fit_values"]
+    data[file.stem.replace("fit_", "")] = sample_data["data_values"]
     error[file.stem.replace("fit_", "")] = sample_data["errors"]
+error = error.loc[~(data == 0).all(axis=1)]
+data = data.loc[~(data == 0).all(axis=1)]
+data = data.replace(0, 1e-4)
 
 
 fig, ax = plt.subplots(figsize=(6, 3))

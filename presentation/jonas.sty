@@ -11,6 +11,7 @@
 \usepackage{booktabs} % For more table thickness options than just \hline.
 %\usepackage{layouts} % For \prntlen{}. Only use for intermediate steps.
                       % Results in warning (\stockheight not defined).
+\usepackage{multicol}
 
 
   %%%%%%%%%%%%%%%%%%%%
@@ -32,6 +33,9 @@
 \colorlet{themeILD_blue-bg}{ILD_blue}
 \colorlet{themeILD_blue-altbg}{green}
 \colorlet{themeILD_blue-fg}{LLR_red}
+\colorlet{themeLLR_red-bg}{LLR_red}
+\colorlet{themeLLR_red-altbg}{green}
+\colorlet{themeLLR_red-fg}{ILD_blue}
 
 \renewcommand<>{\emph}[1]{{\usebeamercolor[ILD_blue]{emph}\only#2#1}}
 

@@ -1,4 +1,4 @@
-\newcommand{\BrEquation}{
+\providecommand{\BrEquation}{
     \providecommand{\BrEqFontsize}{\fontsize{20pt}{20pt}\bf}
     \providecommand{\MatrixPadding}{-10pt}
     \begin{tikzpicture}
@@ -8,22 +8,22 @@
         \node[anchor=west,xshift=\MatrixPadding] at (matrix.east) {\BrEqFontsize $\times~\mathcal{B}$};
     \end{tikzpicture}
 }
-\newcommand{\ColoredHiggsstrahlung}{
+\providecommand{\ColoredHiggsstrahlung}{
     \providecommand{\HiggsColor}{ILD_blue}\providecommand{\PrimaryZColor}{LLR_red}
     \resizebox{0.6\textheight}{!}{\FeynmanHiggsstrahlung}
 }
-\newcommand{\HiggsBlocks}[2]{
+\providecommand{\HiggsBlocks}[2]{
     \begin{columns}[b]
         \begin{column}{0.65\textwidth}#1\end{column}
         \begin{column}{0.35\textwidth}#2\end{column}
     \end{columns}
 }
 \begin{frame}
-    \frametitle{Recap (1/2): Setup}
+    \frametitle{Outline}
     %\renewcommand{\large}{\normalsize}\renewcommand{\normalsize}{\small} \normalsize
     \begin{columns}[onlytextwidth]
     \begin{column}{0.42\textwidth}\begin{minipage}[l][0.8\textheight]{\columnwidth}
-        ILD full simulation study @ILC250.
+        \includegraphics[height=0.18\textheight]{house}
         \vfill
         \begin{block}{\color{LLR_red}Event selection}\color{black}
             $Z \to \mu^+ \mu^-, e^+ e^-$.
@@ -50,21 +50,6 @@
     }{
         \resizebox{\textwidth}{!}{\BrEquation}
     }
-    \end{column}
-    \end{columns}
-    \end{frame}
-
-
-\begin{frame}{Recap (2/2): Results}
-    \begin{columns}[c, onlytextwidth]
-    \begin{column}{0.4\textwidth}
-    \centering
-    \includegraphics[height=0.7\textheight]
-        {correlations_default}
-    \end{column}
-    \begin{column}{0.6\textwidth}
-    \centering
-    \includegraphics[height=0.9\textheight]{br_estimates_default}
     \end{column}
     \end{columns}
     \end{frame}

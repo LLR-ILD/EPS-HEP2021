@@ -18,6 +18,7 @@ STANDARD_SETTINGS+=code/helper_data.py
 PRESEL_STEP_CSVS=$(patsubst $(RAW_DATA_DIR)/presel_e2e2/eLpR/step_%.csv,$(PLOT_DATA)/presel_e2e2_step%.csv,$(wildcard $(RAW_DATA_DIR)/presel_e2e2/eLpR/step_*.csv))
 PLOTS_PRESENTATION:=$(PLOT_DIR)/intro_sample_counts.$(PLOT_FORMAT) $(PLOT_DIR)/intro_signal_composition_per_category.$(PLOT_FORMAT)
 PLOTS_PRESENTATION+=$(PLOT_DIR)/intro_signal_composition_per_category_w_bkg.$(PLOT_FORMAT)
+PLOTS_PRESENTATION+=$(PLOT_DIR)/intro_signal_composition_per_category_inv1.$(PLOT_FORMAT) $(PLOT_DIR)/intro_category_counts_w_bkg_inv1.$(PLOT_FORMAT)
 PLOTS_PRESENTATION+=$(PLOT_DIR)/intro_category_counts.$(PLOT_FORMAT) $(PLOT_DIR)/intro_category_counts_w_bkg.$(PLOT_FORMAT)
 PLOTS_PRESENTATION+=$(PLOT_DIR)/expected_counts_matrix_bkg_e2e2.$(PLOT_FORMAT) $(PLOT_DIR)/probability_matrix.$(PLOT_FORMAT)
 PLOTS_PRESENTATION+=$(PLOT_DIR)/presel_e2e2_eff_0.$(PLOT_FORMAT)
