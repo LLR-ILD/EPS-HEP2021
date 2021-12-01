@@ -1,0 +1,63 @@
+\documentclass[11pt, aspectratio=169]{beamer}
+\usepackage[french,noconfigs]{babel}
+\usepackage{beamerx}
+  \setbeamercovered{invisible}
+\usepackage{jonas}
+
+\graphicspath{
+    {../img/code/}              % Figures produced by me, with cod from the repo.
+    {../img/extern/}            % Figures that I did not create myself
+    {../img/extern/beamerx/}   % Necessary for the theme.
+}
+% \newcommand*\InputBiasTable[1]{\input{img/bias_tables/#1}}
+\newcommand*\InputBiasTable[1]{\input{../img/code/#1}}
+\newcommand*\FeynmanHiggsstrahlung{\input{feynman_higgsstrahlung.tex}}
+\newcommand*\InputSlide[1]{\input{#1}}
+
+\renewcommand{\titletextcolor}{\color{white}}
+\renewcommand{\titlegraphic}{\begin{tikzpicture}[remember picture,overlay]
+    \fill[ILD_blue] (current page.north east) rectangle (current page.south west);
+    \end{tikzpicture}}
+
+\title[3rd FCC-France / Higgs \& ElectroWeak Factory Workshop, Annecy]{
+    A combined fit to\\
+    the Higgs Branching Ratios\\
+    at 250~GeV
+}[Combined Higgs fit]
+\author[Jonas Kunath]{Jonas Kunath, Laboratoire Leprince-Ringuet}
+\date{02.12.2021}
+
+\begin{document}
+\maketitle
+\xsection{ILD_blue}{Event selection}
+    \InputSlide{recap.tex}
+    \InputSlide{selection.tex}
+    \InputSlide{analysis_goal.tex}
+\xsection{ILD_blue}{Idea}
+    \InputSlide{recap.tex}
+    \InputSlide{idea_Higgs_all_in_one.tex}
+\xsection{ILD_blue}{Implemen\-tation}
+    \InputSlide{implementation.tex}
+\xsection{ILD_blue}{Fit}
+    \InputSlide{recap.tex}
+    \InputSlide{fit_setup.tex}
+    \InputSlide{fit_results.tex}
+    \InputSlide{fit_change_bb_ww.tex}
+    \InputSlide{fit_dependency.tex}
+\xsection{ILD_blue}{Conclusion}
+    \InputSlide{conclusion.tex}
+
+\newcounter{finalframe}\setcounter{finalframe}{\value{framenumber}}
+\xsection{LLR_red}{Back-up}[pr_ilc_cavity_resized]
+    \InputSlide{fit_check_toys.tex}
+    \InputSlide{fit_change_bb_ww_toys.tex}
+    \InputSlide{backup/expected_counts_e2e2.tex}
+    \InputSlide{backup/correlations.tex}
+    \InputSlide{ilc.tex}
+    \InputSlide{ild.tex}
+    \InputSlide{backup/comparison_to_global_fit.tex}
+    \InputSlide{higgsstrahlung.tex}
+    \InputSlide{backup/higgstrahlung_per_z_decay.tex}
+    % \InputSlide{higgsstrahlung_event_display.tex}
+\setcounter{framenumber}{\value{finalframe}}
+\end{document}
