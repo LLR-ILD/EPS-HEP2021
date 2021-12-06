@@ -1,0 +1,35 @@
+# Default config file for higgstables
+#
+# Note that categories definitions are tried until the first one applies.
+# Therefore the order matters.
+# If a value in higgstables.categories is a list, the items/expressions
+# are combined per logical_and.
+#
+higgstables:
+  tables:
+    eLpL: "eLpL/*/simple_event_vector.root"
+    eLpR: "eLpR/*/simple_event_vector.root"
+    eRpL: "eRpL/*/simple_event_vector.root"
+    eRpR: "eRpR/*/simple_event_vector.root"
+  ignored-processes: [Pe2e2h, Pe1e1h]  # Avoid duplication with the pre-decay files.
+  machine: "E250-SetA"  # For cross section column.
+  anchors:
+    # Collect here (or anywhere else) anchors (&var) for future aliasing (*var).
+    &no_iso "(n_iso_leptons == 0) & (n_iso_photons == 0)"
+  triggers:  # Events that did not make it to the categories tree.
+    - tree: preselection_passed_
+      type: histogram
+      condition: [0]  # For histogram: which bins to keep.
+  preselections:  # Events in the categories-tree that should not be used.
+    - tree: z_variables
+      # out-of-tree-variables: {n_charged_hadrons: simple_event_vector}
+      condition:  # Same syntax as for categories.
+      - "(m_z > 86.19) & (m_z < 96.19)"
+      - "(m_recoil > 123) & (m_recoil < 130)"
+      - abs(cos_theta_z) < 0.9
+      - abs(cos_theta_miss) < 0.9
+      - abs(cos_theta_z - cos_theta_miss) < 0.50
+      # - abs(cos_theta_z + cos_theta_miss) < 1.20
+  categories-tree: simple_event_vector
+  categories:
+# CATEGORIES GO HERE

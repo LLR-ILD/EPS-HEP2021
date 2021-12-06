@@ -35,5 +35,5 @@ if __name__ == "__main__":
         HIGGS_BR_DATA = s[f"HIGGS_BR_CHANGED_{changed_id}"]
     else:
         HIGGS_BR_DATA = s["HIGGS_BR"]
-    df = data_toys(data_set, s["HIGGS_BR"], HIGGS_BR_DATA, n_toys=10_000)
+    df = data_toys(data_set, s["HIGGS_BR"], HIGGS_BR_DATA, n_toys=100)
     df.to_csv(str(output_file), index=False)
